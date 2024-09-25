@@ -1,33 +1,49 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include <map>
-#include "comets/vendor.h"
-#include "comets/types.h"
+#include "pros/abstract_motor.hpp"
+#include <array>
+#include <cstdint>
 
 namespace constants
 {
+    using namespace pros;
+    inline constexpr bool USE_TANK = false;
+
     namespace drivebase
     {
-        inline constexpr std::array<int8_t, 3> LEFT_PORTS = {
-            7,
-            -2,
-            11,
+        // front, middle, back, top
+        inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
+            0,
+            0,
+            0,
+            0
         };
-        inline constexpr std::array<int8_t, 3> RIGHT_PORTS = {
-            -6,
-            17,
-            -8,
+        inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
+            0,
+            0,
+            0,
+            0
         };
-        inline constexpr auto IMU_PORT = 5;
 
-        inline constexpr auto CARTRIDGE = pros::MotorGearset::blue;
-        inline constexpr auto WHEEL = lemlib::Omniwheel::NEW_325;
-        inline constexpr auto TRACK_WIDTH = 12.5; // in inches
-        inline constexpr auto DRIVETRAIN_RPM = 360;
-        inline constexpr auto HORIZONTAL_DRIFT = 2;
+        inline constexpr double DRIVETRAIN_WIDTH = 11.292; //this is CAD based and will require tuning
+        inline constexpr int8_t IMU_PORT = 0;
+
+        inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
+    }
+
+    namespace intake
+    {
+        // left, right
+        inline constexpr std::array<int8_t, 2> PORTS = {
+            0,
+            0
+        };
+
+        // uses basic motors, which doesn't requre gearset to be configured in code
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms
+
 }
 #endif

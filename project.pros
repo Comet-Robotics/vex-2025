@@ -1,11 +1,11 @@
 {
     "py/object": "pros.conductor.project.Project",
     "py/state": {
-        "project_name": "vex-2025",
+        "project_name": "astro-2025",
         "target": "v5",
         "templates": {
             "LemLib": {
-                "location": "C:\\Users\\keval\\AppData\\Roaming\\PROS\\templates\\LemLib@0.5.4",
+                "location": "C:\\Users\\coleh\\AppData\\Roaming\\PROS\\templates\\LemLib@0.5.4",
                 "metadata": {
                     "origin": "LemLib"
                 },
@@ -48,7 +48,7 @@
                 "version": "0.5.4"
             },
             "kernel": {
-                "location": "C:\\Users\\keval\\AppData\\Roaming\\PROS\\templates\\kernel@4.1.0",
+                "location": "C:\\Users\\coleh\\AppData\\Roaming\\PROS\\templates\\kernel@4.1.0",
                 "metadata": {
                     "cold_addr": "58720256",
                     "cold_output": "bin/cold.package.bin",
@@ -121,9 +121,9 @@
                 "version": "4.1.0"
             },
             "liblvgl": {
-                "location": "C:\\Users\\keval\\AppData\\Roaming\\PROS\\templates\\liblvgl@8.3.8",
+                "location": "C:\\Users\\coleh\\AppData\\Roaming\\PROS\\templates\\liblvgl@8.3.8",
                 "metadata": {
-                    "origin": "kernel-beta-mainline"
+                    "origin": "pros-mainline"
                 },
                 "name": "liblvgl",
                 "py/object": "pros.conductor.templates.local_template.LocalTemplate",

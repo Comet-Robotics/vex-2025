@@ -1,32 +1,69 @@
-#include "tasks/teleop.h"
-#include "comets/vendor.h"
+#include "pros/llemu.hpp"
+#include "pros/misc.h"
+#include "pros/misc.hpp"
 #include "subsystems.h"
+#include "tasks/teleop.h"
+#include "constants.h"
 
-void opcontrol_initialize()
+using namespace pros;
+
+
+void opcontrol_initialize(){}
+
+static void drivebase_controls(Controller &controller)
 {
-    drivebase->calibrate();
+    if constexpr (constants::USE_TANK)
+    {
+        drivebase->tankDrive(
+            controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y),
+            controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y));
+    }
+    else
+    {
+        drivebase->errorDrive(
+            controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y),
+            controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X));
+    }
 }
 
-void opcontrol()
-{
-    pros::Controller controller(pros::E_CONTROLLER_MASTER);
+static void intake_controls(Controller &controller) {
+    if(controller.get_digital(E_CONTROLLER_DIGITAL_X)) {
+        intake->forward();
+    } else if (controller.get_digital(E_CONTROLLER_DIGITAL_Y)) {
+        intake->reverse();
+    } else {
+        intake->stop();
+    }
+}
+
+/**
+ * Runs the operator control code. This function will be started in its own task
+ * with the default priority and stack size whenever the robot is enabled via
+ * the Field Management System or the VEX Competition Switch in the operator
+ * control mode.
+ *
+ * If no competition control is connected, this function will run immediately
+ * following initialize().
+ *
+ * If the robot is disabled or communications is lost, the
+ * operator control task will be stopped. Re-enabling the robot will restart the
+ * task, not resume it from where it left off.
+ */
+void opcontrol() {
+    Controller controller(pros::E_CONTROLLER_MASTER);
 
     while (true)
     {
-        // get left y and right y positions
-        int leftY = controller.get_analog(pros::E_CONTROLLER_ANALOG_LEFT_Y);
-        int rightY = controller.get_analog(pros::E_CONTROLLER_ANALOG_RIGHT_Y);
+        pros::lcd::print(0, "Battery: %2.3f V", pros::battery::get_voltage() / 1000.0f);
 
-        // move the robot
-        drivebase->tank(leftY, rightY, true);
+        drivebase_controls(controller);
+        intake_controls(controller);
 
-        // print robot location to the brain screen
-        pros::lcd::print(0, "X: %f", drivebase->getPose().x);                          // x
-        pros::lcd::print(1, "Y: %f", drivebase->getPose().y);                          // y
-        pros::lcd::print(2, "Theta: %f", drivebase->getPose().theta);                  // heading
-        pros::lcd::print(3, "IMU Theta: %f %f %f", drivebase->getIMU().get_heading()); // heading from IMU
-
-        // delay to save resources
-        pros::delay(20);
+        pros::delay(constants::TELEOP_POLL_TIME);
     }
 }
+
+
+
+
+

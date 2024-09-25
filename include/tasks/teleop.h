@@ -6,8 +6,9 @@ extern "C"
 {
 #endif
 
-    void opcontrol(void);
-    void opcontrol_initialize(void);
+
+void opcontrol(void);
+void opcontrol_initialize(void);
 
 #ifdef __cplusplus
 }
