@@ -43,17 +43,12 @@ void autonomousVS() {
 
 
 void autonomous() {
-    if (MODE == AutonMode::TEST)
-    {
-        autonomousTest();
-    }
-    else if (MODE == AutonMode::SKILLS)
-    {
-        autonomousSkills();
-    }
-    else
-    {
-        autonomousVS();
+    switch (MODE) {
+        case AutonMode::TEST:   return autonomousTest();
+        case AutonMode::SKILLS: return autonomousSkills();
+        case AutonMode::VS:     return autonomousVS();
+    default:
+        break;
     }
 };
 
