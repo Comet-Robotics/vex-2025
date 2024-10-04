@@ -7,7 +7,7 @@
 class CommandPtr : public std::unique_ptr<Command> {
 
  public:
-    CommandPtr(Command* command) {
+    CommandPtr(const Command* command) {
         std::unique_ptr<Command>(command);
     };
     // explicit CommandPtr(std::unique_ptr<Command>&& command);

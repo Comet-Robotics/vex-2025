@@ -6,8 +6,6 @@
 #include "commandScheduler.h"
 #include "commandPtr.h"
 
-// #define CommandPtr std::unique_ptr<Command>
-
 /**
  * A state machine representing a complete action to be performed by the robot.
  * Commands are run by the CommandScheduler, and can be composed into
@@ -78,6 +76,7 @@ class Command {
         kCancelIncoming
     };
     
+    // friend CommandPtr;
     
     /**
      * Decorates this command with a timeout. If the specified timeout is
@@ -88,7 +87,9 @@ class Command {
      * @return the command with the timeout added
      */
     [[nodiscard]]
-    CommandPtr WithTimeout(double duration) &&;
+    CommandPtr Command::WithTimeout(double duration) && {
+       
+    }
     
     /**
      * Decorates this command with an interrupt condition. If the specified
@@ -99,7 +100,9 @@ class Command {
      * @return the command with the interrupt condition added
      */
     [[nodiscard]]
-    CommandPtr Until(std::function<bool()> condition) &&;
+    CommandPtr Command::Until(std::function<bool()> condition) && {
+
+    }
     
     /**
      * Decorates this command with a run condition. If the specified condition
@@ -110,7 +113,9 @@ class Command {
      * @return the command with the run condition added
      */
     [[nodiscard]]
-    CommandPtr OnlyWhile(std::function<bool()> condition) &&;
+    CommandPtr Command::OnlyWhile(std::function<bool()> condition) && {
+        
+    }
     
     /**
      * Decorates this command with a runnable to run before this command starts.
@@ -120,7 +125,9 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr BeforeStarting(std::function<void()> toRun) &&;
+    CommandPtr Command::BeforeStarting(std::function<void()> toRun) && {
+
+    }
     
     /**
      * Decorates this command with a runnable to run after the command finishes.
@@ -130,7 +137,9 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr AndThen(std::function<void()> toRun) &&;
+    CommandPtr Command::AndThen(std::function<void()> toRun) && {
+        
+    }
     
     /**
      * Decorates this command to run repeatedly, restarting it when it ends, until
@@ -139,7 +148,9 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Repeatedly() &&;
+    CommandPtr Command::Repeatedly() && {
+
+    }
     
     /**
      * Decorates this command to only run if this condition is not met. If the
@@ -151,7 +162,9 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Unless(std::function<bool()> condition) &&;
+    CommandPtr Command::Unless(std::function<bool()> condition) && {
+
+    }
     
     /**
      * Decorates this command to only run if this condition is met. If the command
@@ -163,7 +176,9 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr OnlyIf(std::function<bool()> condition) &&;
+    CommandPtr Command::OnlyIf(std::function<bool()> condition) && {
+
+    }
     
 
     
@@ -174,8 +189,10 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr WithInterruptBehavior(
-        Command::InterruptionBehavior interruptBehavior) &&;
+    CommandPtr Command::WithInterruptBehavior(
+        Command::InterruptionBehavior interruptBehavior) && {
+
+        }
     
     /**
      * Decorates this command with a lambda to call on interrupt or end, following
@@ -186,7 +203,9 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr FinallyDo(std::function<void(bool)> end) &&;
+    CommandPtr Command::FinallyDo(std::function<void(bool)> end) && {
+
+    }
     
     /**
      * Decorates this command with a lambda to call on interrupt or end, following
@@ -198,7 +217,9 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr FinallyDo(std::function<void()> end) &&;
+    CommandPtr Command::Command::FinallyDo(std::function<void()> end) && {
+        
+    }
     
     /**
      * Decorates this command with a lambda to call on interrupt, following the
@@ -208,19 +229,25 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr HandleInterrupt(std::function<void()> handler) &&;
+    CommandPtr Command::HandleInterrupt(std::function<void()> handler) && {
+
+    }
     
     
     /**
      * Schedules this command.
      */
-    void Schedule();
+    void Command::Schedule() {
+        CommandScheduler::getInstance().Schedule(this);
+    }
     
     /**
      * Cancels this command. Will call End(true). Commands will be canceled
      * regardless of interruption behavior.
      */
-    void Cancel();
+    void Command::Cancel() {
+        CommandScheduler::getInstance().Cancel(this);
+    }
     
     /**
      * Whether or not the command is currently scheduled. Note that this does not
@@ -229,16 +256,9 @@ class Command {
      *
      * @return Whether the command is scheduled.
      */
-    bool IsScheduled() const;
-
-    
-    /**
-     * Whether the given command should run when the robot is disabled.  Override
-     * to return true if the command should run when disabled.
-     *
-     * @return whether the command should run when the robot is disabled
-     */
-    virtual bool RunsWhenDisabled() const { return false; }
+    bool Command::IsScheduled() const {
+        return CommandScheduler::getInstance().IsScheduled(this);
+    };
     
     /**
      * How the command behaves when another command with a shared requirement is

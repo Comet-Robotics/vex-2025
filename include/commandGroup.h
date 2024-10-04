@@ -3,10 +3,22 @@
 
 #include <command.h>
 #include <list>
+#include <iostream>
+#include <cstdarg>
+class CommandGroup : Command {
+  protected:
+    std::vector<CommandPtr> commandsList;
+  public: 
+    template<typename T, T... Args>
+    void addCommands(CommandPtr commands...) {
+        addCommands<CommandPtr>(commands);
+    }
 
-class CommandGroup {
-    
-
+  private:
+    template<class... Args>
+    void addCommands(Args... arg) {
+        commandsList.emplace_back(arg);
+    }
 };
 
 #endif

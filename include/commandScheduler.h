@@ -1,7 +1,8 @@
 #ifndef COMMAND_SCHEDULER_H
 #define COMMAND_SCHEDULER_H
 
-#include <command.h>
+#include "command.h"
+#include "commandPtr.h"
 #include <unordered_set>
 
 class CommandScheduler {
@@ -35,7 +36,7 @@ class CommandScheduler {
         command->Initialize();
     }
 
-    bool CommandScheduler::IsScheduled (CommandPtr command) {
+    bool CommandScheduler::IsScheduled (CommandPtr command) const {
         return scheduledCommands.contains(command);
     }
 
