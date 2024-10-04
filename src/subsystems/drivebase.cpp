@@ -5,17 +5,17 @@
 using namespace constants::drivebase;
 
 pros::MotorGroup m_groupl ({
-            LEFT_PORTS[0],
-            LEFT_PORTS[1],
-            LEFT_PORTS[2],
-            LEFT_PORTS[3]},
-            CHASSIS_INTERNAL_GEARSET);
+    LEFT_PORTS[0],
+    LEFT_PORTS[1],
+    LEFT_PORTS[2],
+    LEFT_PORTS[3]},
+    CHASSIS_INTERNAL_GEARSET);
 pros::MotorGroup m_groupr ({
-            RIGHT_PORTS[0],
-            RIGHT_PORTS[1],
-            RIGHT_PORTS[2],
-            RIGHT_PORTS[3]},
-            CHASSIS_INTERNAL_GEARSET);
+    RIGHT_PORTS[0],
+    RIGHT_PORTS[1],
+    RIGHT_PORTS[2],
+    RIGHT_PORTS[3]},
+    CHASSIS_INTERNAL_GEARSET);
 
 pros::Imu imu(IMU_PORT);
 
