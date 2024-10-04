@@ -3,8 +3,7 @@
 
 #include "lemlib/api.hpp"
 
-class Drivebase
-{
+class Drivebase {
     public:
         Drivebase();
 

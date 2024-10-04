@@ -1,27 +1,29 @@
 #include "subsystems/drivebase.h"
 #include "constants.h"
-#include "lemlib/api.hpp"
+// #include "lemlib/api.hpp"
+
+using namespace constants::drivebase;
 
 pros::MotorGroup m_groupl ({
-    constants::drivebase::LEFT_PORTS[0],
-    constants::drivebase::LEFT_PORTS[1],
-    constants::drivebase::LEFT_PORTS[2],
-    constants::drivebase::LEFT_PORTS[3]},
-    constants::drivebase::CHASSIS_INTERNAL_GEARSET);
+            LEFT_PORTS[0],
+            LEFT_PORTS[1],
+            LEFT_PORTS[2],
+            LEFT_PORTS[3]},
+            CHASSIS_INTERNAL_GEARSET);
 pros::MotorGroup m_groupr ({
-    constants::drivebase::RIGHT_PORTS[0],
-    constants::drivebase::RIGHT_PORTS[1],
-    constants::drivebase::RIGHT_PORTS[2],
-    constants::drivebase::RIGHT_PORTS[3]},
-    constants::drivebase::CHASSIS_INTERNAL_GEARSET);
+            RIGHT_PORTS[0],
+            RIGHT_PORTS[1],
+            RIGHT_PORTS[2],
+            RIGHT_PORTS[3]},
+            CHASSIS_INTERNAL_GEARSET);
 
-pros::Imu imu(constants::drivebase::IMU_PORT);
+pros::Imu imu(IMU_PORT);
 
 // drivetrain settings
 lemlib::Drivetrain drivetrain(
     &m_groupl, // left motor group
     &m_groupr, // right motor group
-    constants::drivebase::DRIVETRAIN_WIDTH, // 10 inch track width
+    DRIVETRAIN_WIDTH, // 10 inch track width
     lemlib::Omniwheel::NEW_325, // using new 3.25" omnis
     360, // drivetrain rpm is 360
     2 // horizontal drift is 2 (for now)
@@ -34,39 +36,15 @@ lemlib::OdomSensors sensors(nullptr, // vertical tracking wheel 1, set to null
                         &imu // inertial sensor
 );
 
-// lateral PID controller
-lemlib::ControllerSettings lateral_controller(0, // proportional gain (kP)
-                                            0, // integral gain (kI)
-                                            0, // derivative gain (kD)
-                                            3, // anti windup
-                                            1, // small error range, in inches
-                                            100, // small error range timeout, in milliseconds
-                                            3, // large error range, in inches
-                                            500, // large error range timeout, in milliseconds
-                                            20 // maximum acceleration (slew)
-);
-
-// angular PID controller
-lemlib::ControllerSettings angular_controller(0, // proportional gain (kP)
-                                            0, // integral gain (kI)
-                                            0, // derivative gain (kD)
-                                            0, //3, // anti windup
-                                            0, //1, // small error range, in degrees
-                                            0, //100, // small error range timeout, in milliseconds
-                                            0, //3, // large error range, in degrees
-                                            0, //500, // large error range timeout, in milliseconds
-                                            0 // maximum acceleration (slew)
-);
-
 lemlib::Chassis chassis(drivetrain, // drivetrain settings
                     lateral_controller, // lateral PID settings
                     angular_controller, // angular PID settings
                     sensors // odometry sensors
 );
 
+
 Drivebase::Drivebase()
 {
-
     static_assert(constants::drivebase::LEFT_PORTS.size() == 4 && constants::drivebase::RIGHT_PORTS.size() == 4,
                   "number of motors on drivebase has changed without consulting drivebase.cpp");
 
