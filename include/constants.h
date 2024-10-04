@@ -37,7 +37,7 @@ namespace constants
 
 
         // lateral PID controller
-        inline const lemlib::ControllerSettings lateral_controller(
+        inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
             0, // proportional gain (kP)
             0, // integral gain (kI)
             0, // derivative gain (kD)
@@ -50,7 +50,7 @@ namespace constants
         );
 
         // angular PID controller
-        inline const lemlib::ControllerSettings angular_controller(
+        inline const lemlib::ControllerSettings ANGULAR_CONTROLLER(
             0, // proportional gain (kP)
             0, // integral gain (kI)
             0, // derivative gain (kD)
@@ -60,6 +60,41 @@ namespace constants
             0, //3, // large error range, in degrees
             0, //500, // large error range timeout, in milliseconds
             0 // maximum acceleration (slew)
+        );
+
+
+        pros::MotorGroup LEFT_MOTORS ({
+            LEFT_PORTS[0],
+            LEFT_PORTS[1],
+            LEFT_PORTS[2],
+            LEFT_PORTS[3]},
+            CHASSIS_INTERNAL_GEARSET);
+            
+        pros::MotorGroup RIGHT_MOTORS ({
+            RIGHT_PORTS[0],
+            RIGHT_PORTS[1],
+            RIGHT_PORTS[2],
+            RIGHT_PORTS[3]},
+            CHASSIS_INTERNAL_GEARSET);
+
+        pros::Imu IMU(IMU_PORT);
+
+        // drivetrain settings
+        lemlib::Drivetrain DRIVETRAIN(
+            &LEFT_MOTORS, // left motor group
+            &RIGHT_MOTORS, // right motor group
+            DRIVETRAIN_WIDTH, // 10 inch track width
+            lemlib::Omniwheel::NEW_325, // using new 3.25" omnis
+            360, // drivetrain rpm is 360
+            2 // horizontal drift is 2 (for now)
+        );
+
+        lemlib::OdomSensors SENSORS(
+            nullptr, // vertical tracking wheel 1
+            nullptr, // vertical tracking wheel 2, set to nullptr as we are using two wheel
+            nullptr, // horizontal tracking wheel 1
+            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
+            &IMU // inertial sensor
         );
     }
 

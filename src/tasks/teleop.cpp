@@ -1,9 +1,9 @@
 #include "pros/llemu.hpp"
 #include "pros/misc.h"
 #include "pros/misc.hpp"
-#include "subsystems.h"
 #include "tasks/teleop.h"
 #include "constants.h"
+#include "subsystems.h"
 
 using namespace pros;
 
@@ -14,7 +14,7 @@ static void drivebase_controls(Controller &controller)
 {
     if constexpr (constants::USE_TANK)
     {
-        drivebase->tankDrive(
+        drivebase->tank(
             controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y),
             controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y));
     }
