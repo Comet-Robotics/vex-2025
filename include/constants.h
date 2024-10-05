@@ -109,6 +109,11 @@ namespace constants
         // uses basic motors, which doesn't requre gearset to be configured in code
     }
 
+    namespace clamp
+    {
+        inline constexpr char PORT = 'F';
+    }
+
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms
 
 }
