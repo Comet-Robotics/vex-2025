@@ -5,7 +5,7 @@
 #include <list>
 #include <iostream>
 #include <cstdarg>
-class CommandGroup : Command {
+class CommandGroup : public Command {
   protected:
     std::vector<CommandPtr> commandsList;
   public: 
