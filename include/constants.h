@@ -37,7 +37,7 @@ namespace constants
 
 
         // lateral PID controller
-        inline const lemlib::ControllerSettings lateral_controller(
+        inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
             0, // proportional gain (kP)
             0, // integral gain (kI)
             0, // derivative gain (kD)
@@ -50,7 +50,7 @@ namespace constants
         );
 
         // angular PID controller
-        inline const lemlib::ControllerSettings angular_controller(
+        inline const lemlib::ControllerSettings ANGULAR_CONTROLLER(
             0, // proportional gain (kP)
             0, // integral gain (kI)
             0, // derivative gain (kD)
