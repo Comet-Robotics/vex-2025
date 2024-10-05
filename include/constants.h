@@ -14,7 +14,7 @@ namespace constants
     namespace drivebase
     {
         // front, middle, back, top
-        inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
+        constexpr std::array<int8_t, 4> LEFT_PORTS = {
             0,
             0,
             0,
@@ -22,7 +22,7 @@ namespace constants
         };
 
         // front, middle, back, top
-        inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
+        constexpr std::array<int8_t, 4> RIGHT_PORTS = {
             0,
             0,
             0,
@@ -63,24 +63,24 @@ namespace constants
         );
 
 
-        pros::MotorGroup LEFT_MOTORS ({
+        inline pros::MotorGroup LEFT_MOTORS ({
             LEFT_PORTS[0],
             LEFT_PORTS[1],
             LEFT_PORTS[2],
             LEFT_PORTS[3]},
             CHASSIS_INTERNAL_GEARSET);
             
-        pros::MotorGroup RIGHT_MOTORS ({
+        inline pros::MotorGroup RIGHT_MOTORS ({
             RIGHT_PORTS[0],
             RIGHT_PORTS[1],
             RIGHT_PORTS[2],
             RIGHT_PORTS[3]},
             CHASSIS_INTERNAL_GEARSET);
 
-        pros::Imu IMU(IMU_PORT);
+        inline pros::Imu IMU(IMU_PORT);
 
         // drivetrain settings
-        lemlib::Drivetrain DRIVETRAIN(
+        inline lemlib::Drivetrain DRIVETRAIN(
             &LEFT_MOTORS, // left motor group
             &RIGHT_MOTORS, // right motor group
             DRIVETRAIN_WIDTH, // 10 inch track width
@@ -89,7 +89,7 @@ namespace constants
             2 // horizontal drift is 2 (for now)
         );
 
-        lemlib::OdomSensors SENSORS(
+        inline lemlib::OdomSensors SENSORS(
             nullptr, // vertical tracking wheel 1
             nullptr, // vertical tracking wheel 2, set to nullptr as we are using two wheel
             nullptr, // horizontal tracking wheel 1

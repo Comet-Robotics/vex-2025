@@ -1,7 +1,6 @@
 #ifndef __SUBSYSTEMS_DRIVEBASE_H__
 #define __SUBSYSTEMS_DRIVEBASE_H__
 
-#include "lemlib/api.hpp"
 #include "constants.h"
 
 

@@ -1,18 +1,17 @@
 #ifndef __SUBSYSTEMS_H__
 #define __SUBSYSTEMS_H__
 
-#include <memory>
-
 #include "subsystems/drivebase.h"
 #include "subsystems/intake.h"
 
 
-extern Drivebase* drivebase;
-extern Intake* intake;
+inline Drivebase* drivebase = nullptr;  
+inline Intake* intake = nullptr;        
 
-void subsystems_initialize() {
-	drivebase = new Drivebase();
-	intake = new Intake();
+// Initialize the subsystems
+inline void subsystems_initialize() {
+    drivebase = new Drivebase();
+    intake = new Intake();
 }
 
 #endif
