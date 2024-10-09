@@ -4,21 +4,21 @@
 #include "constants.h"
 #include "pros/adi.hpp"
 
-
 using namespace constants::clamp;
-class Clamp : public pros::adi::DigitalOut {
-    
-    public:
-        bool isToggled = false;
-        Clamp() : pros::adi::DigitalOut(PORT, false) {}
+class Clamp : public pros::adi::DigitalOut
+{
 
-        void toggle() {
-            isToggled = !isToggled;
-            this->set_value(isToggled);
-        }
+public:
+    bool isToggled = false;
+    Clamp() : pros::adi::DigitalOut(PORT, false) {}
 
-    private:
-        
+    void toggle()
+    {
+        isToggled = !isToggled;
+        this->set_value(isToggled);
+    }
+
+private:
 };
 
 #endif

@@ -7,8 +7,7 @@
 
 using namespace pros;
 
-
-void opcontrol_initialize(){}
+void opcontrol_initialize() {}
 
 static void drivebase_controls(Controller &controller)
 {
@@ -26,18 +25,26 @@ static void drivebase_controls(Controller &controller)
     }
 }
 
-static void intake_controls(Controller &controller) {
-    if(controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
+static void intake_controls(Controller &controller)
+{
+    if (controller.get_digital(E_CONTROLLER_DIGITAL_L2))
+    {
         intake->forward();
-    } else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
+    }
+    else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1))
+    {
         intake->reverse();
-    } else {
+    }
+    else
+    {
         intake->stop();
     }
 }
 
-static void clamp_controls(Controller &controller) {
-    if(controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
+static void clamp_controls(Controller &controller)
+{
+    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R1))
+    {
         clamp->toggle();
     }
 }
@@ -55,7 +62,8 @@ static void clamp_controls(Controller &controller) {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol() {
+void opcontrol()
+{
     Controller controller(pros::E_CONTROLLER_MASTER);
 
     while (true)
@@ -69,8 +77,3 @@ void opcontrol() {
         pros::delay(constants::TELEOP_POLL_TIME);
     }
 }
-
-
-
-
-
