@@ -4,32 +4,47 @@
 #include "commandGroup.h"
 #include "command.h"
 
-class SequentialCommandGroup : public CommandGroup {
+class SequentialCommandGroup : public Command {
   private:
     int currentCommandIndex = -1;
+    std::vector<CommandPtr> m_commands;
+
   public:
+
+    void AddCommands(const std::initializer_list<CommandPtr>& newCommands) {
+        m_commands.reserve(m_commands.size());
+
+        for (const CommandPtr& command : newCommands) {
+            m_commands.emplace_back(command);
+        }
+    }
+    void SequentialCommandGroup(const std::initializer_list<CommandPtr>& commands) {
+        AddCommands(commands);
+    }
+
+
     virtual void Initialize() override {
        currentCommandIndex = 0;
 
-        if (!commands.empty()) {
-            commands.front().initialize();
+        if (!m_commands.empty()) {
+            m_commands.front().initialize();
         }
     }
     
     
     virtual void Execute() override {
-        if (commands.empty()) return;
+        if (m_commands.empty()) return;
         
 
-        CommandPtr currentCommand = commands.at(currentCommandIndex);
+        CommandPtr currentCommand = m_commands.at(currentCommandIndex);
 
         currentCommand.execute();
         if (!currentCommand.isFinished()) {
             currentCommand.end(false);
 
             currentCommandIndex++;
-            if (currentCommandIndex < commands.size()) {
-                commands.at(currentCommandIndex).initialize();
+            if (currentCommandIndex < m_commands.size()) {
+                m_commands.at(currentCommandIndex).initialize();
             }
         }
     }
@@ -37,15 +52,15 @@ class SequentialCommandGroup : public CommandGroup {
     
     virtual void End(bool interrupted) override {
         if (interrupted
-                && !commands.empty()
+                && !m_commands.empty()
                 && currentCommandIndex > -1
-                && currentCommandIndex < commands.size()) {
-            commands.at(currentCommandIndex).end(true);
+                && currentCommandIndex < m_commands.size()) {
+            m_commands.at(currentCommandIndex).end(true);
         }
         currentCommandIndex = -1;
     }
     
-    virtual bool IsFinished() override { return currentCommandIndex == commands.size(); }
+    virtual bool IsFinished() override { return currentCommandIndex == m_commands.size(); }
 };
 
 
