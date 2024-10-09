@@ -7,18 +7,35 @@
 #include <cstdarg>
 class CommandGroup : public Command {
   protected:
-    std::vector<CommandPtr> commandsList;
+    std::vector<Command> commands;
+
   public: 
-    template<typename T, T... Args>
-    void addCommands(CommandPtr commands...) {
-        addCommands<CommandPtr>(commands);
+
+    void AddCommands(const std::initializer_list<Command> newCommands) {
+        commands.reserve(commands.size());
+
+        for (const Command& command : commands) {
+            commands.emplace_back(command);
+        }
+    }
+    // template<typename T, T... Args>
+    // void addCommands(CommandPtr commands...) {
+    //     addCommands<CommandPtr>(commands);
+    // }
+
+    virtual void Execute() override {
+        for (const Command &command : commands) {
+            command.Execute();
+        }
     }
 
   private:
-    template<class... Args>
-    void addCommands(Args... arg) {
-        commandsList.emplace_back(arg);
-    }
+    // template<class... Args>
+    // void addCommands(Args... arg) {
+    //     commandsInGroup.emplace_back(arg);
+    // }
+
+  
 };
 
 #endif
