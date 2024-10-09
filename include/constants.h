@@ -93,10 +93,9 @@ namespace constants
 
     namespace intake
     {
-        // left, right
         inline constexpr std::array<int8_t, 2> PORTS = {
-            0,
-            0
+            11, // left
+            -12 // right
         };
 
         // uses basic motors, which doesn't requre gearset to be configured in code
