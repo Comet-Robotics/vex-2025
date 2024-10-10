@@ -2,9 +2,8 @@
 #define COMMAND_H
 #include <functional>
 #include <memory>
-#include "commandPtr.h"
-// namespace commands {
-    // #include "commandPtr.h"
+// #include "commandPtr.h"
+
 /**
  * A state machine representing a complete action to be performed by the robot.
  * Commands are run by the CommandScheduler, and can be composed into
@@ -75,7 +74,7 @@ class Command {
         kCancelIncoming
     };
     
-    // friend class CommandPtr;
+    friend class CommandPtr;
     
     /**
      * Decorates this command with a timeout. If the specified timeout is
