@@ -5,9 +5,9 @@
 #include "tasks/auton.h"
 #include "tasks/teleop.h"
 
-// #include "cmdlib/command.h"
+#include "cmdlib/command.h"
 #include "cmdlib/commandScheduler.h"
-#include "cmdlib/parallelCommandGroup.h"
+// #include "cmdlib/parallelCommandGroup.h"
 // #include "cmdlib/sequentialCommandGroup.h"
 
 /**
