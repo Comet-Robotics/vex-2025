@@ -56,5 +56,4 @@ void autonomous()
 
 void autonomous_initialize()
 {
-    drivebase->calibrateChassis(true);
 };
