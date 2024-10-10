@@ -15,16 +15,18 @@ class ParallelCommandGroup : public Command {
 
   public:
     void AddCommands(std::vector<std::unique_ptr<Command>>&& newCommands) {
+        m_commands.reserve(newCommands.size());
         for (auto& command : newCommands) {
             // Move each command into a new CommandNode and add it to m_commands
-            m_commands.push_back({std::move(command), false});
+            m_commands.emplace_back({std::move(command), false});
         }
     }
 
     void AddCommands(std::initializer_list<Command>& newCommands) {
+        m_commands.reserve(newCommands.size());
         for (auto& command : newCommands) {
             // Move each command into a new CommandNode and add it to m_commands
-            m_commands.push_back({std::make_unique<Command>(command), false});
+            m_commands.emplace_back({std::make_unique<Command>(command), false});
         }
     }
     // void AddCommands(std::initializer_list<Command>& newCommands) {
