@@ -1,33 +1,32 @@
 #ifndef __SEQUENTIAL_COMMAND_GROUP_H__
 #define __SEQUENTIAL_COMMAND_GROUP_H__
 
-#include "commandGroup.h"
 #include "command.h"
+#include <vector>
+#include <initializer_list>
 
 class SequentialCommandGroup : public Command {
   private:
     int currentCommandIndex = -1;
-    std::vector<CommandPtr> m_commands;
+
+    std::vector<Command> m_commands;
 
   public:
 
-    void AddCommands(const std::initializer_list<CommandPtr>& newCommands) {
-        m_commands.reserve(m_commands.size());
-
-        for (const CommandPtr& command : newCommands) {
-            m_commands.emplace_back(command);
-        }
+    void AddCommands(const std::initializer_list<Command>& newCommands) {
+        // m_commands.reserve(m_commands.size());
+        m_commands.emplace_back(newCommands);
     }
-    void SequentialCommandGroup(const std::initializer_list<CommandPtr>& commands) {
+
+    void SequentialCommandGroup(const std::initializer_list<Command>& commands) : Command() {
         AddCommands(commands);
     }
-
 
     virtual void Initialize() override {
        currentCommandIndex = 0;
 
         if (!m_commands.empty()) {
-            m_commands.front().initialize();
+            m_commands.front()->initialize();
         }
     }
     
@@ -36,15 +35,15 @@ class SequentialCommandGroup : public Command {
         if (m_commands.empty()) return;
         
 
-        CommandPtr currentCommand = m_commands.at(currentCommandIndex);
+        Command currentCommand = m_commands.at(currentCommandIndex);
 
-        currentCommand.execute();
-        if (!currentCommand.isFinished()) {
-            currentCommand.end(false);
+        currentCommand->execute();
+        if (!currentCommand->isFinished()) {
+            currentCommand->end(false);
 
             currentCommandIndex++;
-            if (currentCommandIndex < m_commands.size()) {
-                m_commands.at(currentCommandIndex).initialize();
+            if (currentCommandIndex < m_commands->size()) {
+                m_commands.at(currentCommandIndex)->initialize();
             }
         }
     }

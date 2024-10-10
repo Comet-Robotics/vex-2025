@@ -5,6 +5,11 @@
 #include "tasks/auton.h"
 #include "tasks/teleop.h"
 
+// #include "cmdlib/command.h"
+#include "cmdlib/commandScheduler.h"
+#include "cmdlib/parallelCommandGroup.h"
+// #include "cmdlib/sequentialCommandGroup.h"
+
 /**
  * Runs initialization code. This occurs as soon as the program is started.
  *

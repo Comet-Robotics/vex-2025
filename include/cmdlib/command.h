@@ -3,9 +3,10 @@
 #define COMMAND_H
 #include <functional>
 #include <memory>
-#include "commandScheduler.h"
 #include "commandPtr.h"
-
+#include 
+// namespace commands {
+    // #include "commandPtr.h"
 /**
  * A state machine representing a complete action to be performed by the robot.
  * Commands are run by the CommandScheduler, and can be composed into
@@ -76,7 +77,7 @@ class Command {
         kCancelIncoming
     };
     
-    // friend CommandPtr;
+    // friend class CommandPtr;
     
     /**
      * Decorates this command with a timeout. If the specified timeout is
@@ -87,9 +88,7 @@ class Command {
      * @return the command with the timeout added
      */
     [[nodiscard]]
-    CommandPtr Command::WithTimeout(double duration) && {
-       
-    }
+    CommandPtr WithTimeout(double duration) &&;
     
     /**
      * Decorates this command with an interrupt condition. If the specified
@@ -100,9 +99,7 @@ class Command {
      * @return the command with the interrupt condition added
      */
     [[nodiscard]]
-    CommandPtr Command::Until(std::function<bool()> condition) && {
-
-    }
+    CommandPtr Until(std::function<bool()> condition) &&;
     
     /**
      * Decorates this command with a run condition. If the specified condition
@@ -113,9 +110,7 @@ class Command {
      * @return the command with the run condition added
      */
     [[nodiscard]]
-    CommandPtr Command::OnlyWhile(std::function<bool()> condition) && {
-        
-    }
+    CommandPtr OnlyWhile(std::function<bool()> condition) &&;
     
     /**
      * Decorates this command with a runnable to run before this command starts.
@@ -125,9 +120,7 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::BeforeStarting(std::function<void()> toRun) && {
-
-    }
+    CommandPtr BeforeStarting(std::function<void()> toRun) &&;
     
     /**
      * Decorates this command with a runnable to run after the command finishes.
@@ -137,9 +130,7 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::AndThen(std::function<void()> toRun) && {
-        
-    }
+    CommandPtr AndThen(std::function<void()> toRun) &&;
     
     /**
      * Decorates this command to run repeatedly, restarting it when it ends, until
@@ -148,9 +139,7 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::Repeatedly() && {
-
-    }
+    CommandPtr Repeatedly() &&;
     
     /**
      * Decorates this command to only run if this condition is not met. If the
@@ -162,9 +151,7 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::Unless(std::function<bool()> condition) && {
-
-    }
+    CommandPtr Unless(std::function<bool()> condition) &&;
     
     /**
      * Decorates this command to only run if this condition is met. If the command
@@ -176,9 +163,7 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::OnlyIf(std::function<bool()> condition) && {
-
-    }
+    CommandPtr OnlyIf(std::function<bool()> condition) &&;
     
 
     
@@ -189,27 +174,22 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::WithInterruptBehavior(
-        Command::InterruptionBehavior interruptBehavior) && {
-
-        }
+    CommandPtr WithInterruptBehavior(InterruptionBehavior interruptBehavior) &&;
     
     /**
      * Decorates this command with a lambda to call on interrupt or end, following
-     * the command's inherent Command::End(bool) method.
+     * the command's inherent End(bool) method.
      *
      * @param end a lambda accepting a boolean parameter specifying whether the
      * command was interrupted.
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::FinallyDo(std::function<void(bool)> end) && {
-
-    }
+    CommandPtr FinallyDo(std::function<void(bool)> end) &&;
     
     /**
      * Decorates this command with a lambda to call on interrupt or end, following
-     * the command's inherent Command::End(bool) method. The provided lambda will
+     * the command's inherent End(bool) method. The provided lambda will
      * run identically in both interrupt and end cases.
      *
      * @param end a lambda to run when the command ends, whether or not it was
@@ -217,37 +197,29 @@ class Command {
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::Command::FinallyDo(std::function<void()> end) && {
-        
-    }
+    CommandPtr FinallyDo(std::function<void()> end) &&;
     
     /**
      * Decorates this command with a lambda to call on interrupt, following the
-     * command's inherent Command::End(bool) method.
+     * command's inherent End(bool) method.
      *
      * @param handler a lambda to run when the command is interrupted
      * @return the decorated command
      */
     [[nodiscard]]
-    CommandPtr Command::HandleInterrupt(std::function<void()> handler) && {
-
-    }
+    CommandPtr HandleInterrupt(std::function<void()> handler) &&;
     
     
     /**
      * Schedules this command.
      */
-    void Command::Schedule() {
-        CommandScheduler::getInstance().Schedule(this);
-    }
+    void Schedule();
     
     /**
      * Cancels this command. Will call End(true). Commands will be canceled
      * regardless of interruption behavior.
      */
-    void Command::Cancel() {
-        CommandScheduler::getInstance().Cancel(this);
-    }
+    void Cancel();
     
     /**
      * Whether or not the command is currently scheduled. Note that this does not
@@ -256,9 +228,7 @@ class Command {
      *
      * @return Whether the command is scheduled.
      */
-    bool Command::IsScheduled() const {
-        return CommandScheduler::getInstance().IsScheduled(this);
-    };
+    bool IsScheduled() const;
     
     /**
      * How the command behaves when another command with a shared requirement is
@@ -274,9 +244,12 @@ class Command {
      * Transfers ownership of this command to a unique pointer.  Used for
      * decorator methods.
      */
-    virtual CommandPtr ToPtr() && = 0;
+    // virtual CommandPtr ToPtr() && {
+    //     return std::make_unique<Command>(std::move(*this));
+    // };
     
     protected:
     Command();
 };
+// }
 #endif

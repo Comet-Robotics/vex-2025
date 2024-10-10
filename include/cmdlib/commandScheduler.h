@@ -1,10 +1,13 @@
 #ifndef COMMAND_SCHEDULER_H
 #define COMMAND_SCHEDULER_H
 
-#include "command.h"
 #include "commandPtr.h"
 #include <unordered_set>
 
+/**  CommandScheduler acts as a singleton which runs all the commands for the robot.
+ *  This format allows for commands to be easily created, composed, and executed asynchronously 
+ *  from when they are first scheduled.
+ */
 class CommandScheduler {
   private:
     static std::unordered_set<CommandPtr> scheduledCommands;

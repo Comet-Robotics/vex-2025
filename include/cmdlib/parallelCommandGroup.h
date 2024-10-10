@@ -1,8 +1,8 @@
 #ifndef __PARALLEL_COMMAND_GROUP_H__
 #define __PARALLEL_COMMAND_GROUP_H__
 
-#include "commandGroup.h"
-#include "unordered_map"
+#include "command.h"
+#include <unordered_map>
 
 class ParallelCommandGroup : public Command {
   private:
