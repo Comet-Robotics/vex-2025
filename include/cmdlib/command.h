@@ -1,10 +1,8 @@
-
 #ifndef COMMAND_H
 #define COMMAND_H
 #include <functional>
 #include <memory>
 #include "commandPtr.h"
-#include 
 // namespace commands {
     // #include "commandPtr.h"
 /**
