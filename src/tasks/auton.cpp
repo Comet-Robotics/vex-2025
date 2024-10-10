@@ -1,12 +1,9 @@
 #include "pros/misc.h"
 #include "pros/misc.hpp"
 #include "subsystems.h"
-#include "subsystems/drivebase.h"
 #include "tasks/auton.h"
 
-
-
-pros::Controller controller (pros::E_CONTROLLER_MASTER);
+pros::Controller controller(pros::E_CONTROLLER_MASTER);
 ASSET(path_txt)
 
 enum class AutonMode
@@ -20,10 +17,11 @@ enum class AutonMode
  *  VS is 2v2 auton
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
-*/
+ */
 inline constexpr AutonMode MODE = AutonMode::TEST;
 
-void autonomousTest() {
+void autonomousTest()
+{
     // drivebase->turnToHeading(90, 100000);
     // drivebase->moveToPoint(0, 10, 100000);
     drivebase->follow(path_txt, 2000, 15);
@@ -33,27 +31,29 @@ void autonomousTest() {
     controller.print(2, 0, "Theta: %f", drivebase->getPose().theta);
 }
 
-void autonomousSkills() {
-    
+void autonomousSkills()
+{
 }
 
-void autonomousVS() {
-
+void autonomousVS()
+{
 }
 
-
-void autonomous() {
-    switch (MODE) {
-        case AutonMode::TEST:   return autonomousTest();
-        case AutonMode::SKILLS: return autonomousSkills();
-        case AutonMode::VS:     return autonomousVS();
+void autonomous()
+{
+    switch (MODE)
+    {
+    case AutonMode::TEST:
+        return autonomousTest();
+    case AutonMode::SKILLS:
+        return autonomousSkills();
+    case AutonMode::VS:
+        return autonomousVS();
     default:
         break;
     }
 };
 
-
-
-void autonomous_initialize() {
-    drivebase->calibrateChassis(true);
+void autonomous_initialize()
+{
 };
