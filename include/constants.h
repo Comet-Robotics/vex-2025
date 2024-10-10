@@ -14,18 +14,16 @@ namespace constants
     namespace drivebase
     {
         // front, middle, back, top
-        inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
-            0,
-            0,
-            0,
-            0};
+        inline constexpr std::array<int8_t, 3> LEFT_PORTS = {
+            -14,
+            15,
+            18};
 
         // front, middle, back, top
-        inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
-            0,
-            0,
-            0,
-            0};
+        inline constexpr std::array<int8_t, 3> RIGHT_PORTS = {
+            -12,
+            13,
+            -11};
 
         inline constexpr double DRIVETRAIN_WIDTH = 11.292; // this is CAD based and will require tuning
         inline constexpr int8_t IMU_PORT = 0;
@@ -60,14 +58,12 @@ namespace constants
 
         inline pros::MotorGroup LEFT_MOTORS({LEFT_PORTS[0],
                                              LEFT_PORTS[1],
-                                             LEFT_PORTS[2],
-                                             LEFT_PORTS[3]},
+                                             LEFT_PORTS[2]},
                                             CHASSIS_INTERNAL_GEARSET);
 
         inline pros::MotorGroup RIGHT_MOTORS({RIGHT_PORTS[0],
                                               RIGHT_PORTS[1],
-                                              RIGHT_PORTS[2],
-                                              RIGHT_PORTS[3]},
+                                              RIGHT_PORTS[2]},
                                              CHASSIS_INTERNAL_GEARSET);
 
         inline pros::Imu IMU(IMU_PORT);
@@ -94,8 +90,8 @@ namespace constants
     namespace intake
     {
         inline constexpr std::array<int8_t, 2> PORTS = {
-            11, // left
-            -12 // right
+            10, // left
+            -20 // right
         };
 
         // uses basic motors, which doesn't requre gearset to be configured in code
