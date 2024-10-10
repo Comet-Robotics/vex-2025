@@ -14,11 +14,14 @@ class SequentialCommandGroup : public Command {
   public:
 
     void AddCommands(const std::initializer_list<Command>& newCommands) {
-        // m_commands.reserve(m_commands.size());
-        m_commands.emplace_back(newCommands);
+        m_commands.reserve(m_commands.size());
+
+        for (const Command& command : newCommands) {
+            m_commands.emplace_back(command);
+        }
     }
 
-    void SequentialCommandGroup(const std::initializer_list<Command>& commands) : Command() {
+    SequentialCommandGroup(const std::initializer_list<Command>& commands) {
         AddCommands(commands);
     }
 
@@ -26,7 +29,7 @@ class SequentialCommandGroup : public Command {
        currentCommandIndex = 0;
 
         if (!m_commands.empty()) {
-            m_commands.front()->initialize();
+            m_commands.front().Initialize();
         }
     }
     
@@ -37,13 +40,13 @@ class SequentialCommandGroup : public Command {
 
         Command currentCommand = m_commands.at(currentCommandIndex);
 
-        currentCommand->execute();
-        if (!currentCommand->isFinished()) {
-            currentCommand->end(false);
+        currentCommand.Execute();
+        if (!currentCommand.IsFinished()) {
+            currentCommand.End(false);
 
             currentCommandIndex++;
-            if (currentCommandIndex < m_commands->size()) {
-                m_commands.at(currentCommandIndex)->initialize();
+            if (currentCommandIndex < m_commands.size()) {
+                m_commands.at(currentCommandIndex).Initialize();
             }
         }
     }
@@ -54,7 +57,7 @@ class SequentialCommandGroup : public Command {
                 && !m_commands.empty()
                 && currentCommandIndex > -1
                 && currentCommandIndex < m_commands.size()) {
-            m_commands.at(currentCommandIndex).end(true);
+            m_commands.at(currentCommandIndex).End(true);
         }
         currentCommandIndex = -1;
     }

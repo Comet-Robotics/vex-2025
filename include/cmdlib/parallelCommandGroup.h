@@ -11,14 +11,15 @@ class ParallelCommandGroup : public Command {
   public:
 
 
-    void AddCommands(const std::initializer_list<Command>& newCommands) {
+    void AddCommands(std::initializer_list<Command>& newCommands) {
         m_commands.reserve(newCommands.size());
 
         for (const Command& command : newCommands) {
             m_commands.try_emplace(command, false);
         }
     }
-    void ParallelCommandGroup(const std::initializer_list<Command>& commands) {
+
+    ParallelCommandGroup(std::initializer_list<Command>& commands) {
         AddCommands(commands);
     }
 
