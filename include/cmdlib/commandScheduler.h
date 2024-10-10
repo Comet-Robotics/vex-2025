@@ -10,7 +10,7 @@
  */
 class CommandScheduler {
   private:
-    static std::unordered_set<std::unique_ptr<Command>> scheduledCommands;
+    static std::unordered_set<Command*> scheduledCommands;
     static CommandScheduler* instance;
 
   public:
@@ -25,26 +25,26 @@ class CommandScheduler {
 
     static CommandScheduler& getInstance() { return *instance; }
 
-    void Schedule(const std::unique_ptr<Command>& command) {
+    void Schedule(Command* command) {
         if(!scheduledCommands.contains(command))
             scheduledCommands.emplace(command);
         
         command->Initialize();
     }
 
-    bool IsScheduled (const std::unique_ptr<Command>& command) const {
+    bool IsScheduled (Command* command) const {
         return scheduledCommands.contains(command);
     }
 
 
-    void Cancel(const std::unique_ptr<Command>& command) {
+    void Cancel(Command* command) {
         command->End(true);
         scheduledCommands.erase(command);
     }
     
 
     void run() { 
-        for (const std::unique_ptr<Command>& command : scheduledCommands) {
+        for (Command* command : scheduledCommands) {
             command->Execute();
 
             if (command->IsFinished()) {
