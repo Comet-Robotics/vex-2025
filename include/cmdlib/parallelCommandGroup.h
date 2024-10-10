@@ -6,11 +6,27 @@
 
 class ParallelCommandGroup : public Command {
   private:
-    std::unordered_map<Command, bool> m_commands;
+    struct CommandNode {
+        std::unique_ptr<Command> command;
+        bool isRunning;
+    };
+    std::vector<CommandNode> m_commands;
     int m_runningCommandCount = 0;
+
   public:
+    void AddCommands(std::vector<std::unique_ptr<Command>>&& newCommands) {
+        for (auto& command : newCommands) {
+            // Move each command into a new CommandNode and add it to m_commands
+            m_commands.push_back({std::move(command), false});
+        }
+    }
 
-
+    void AddCommands(std::initializer_list<Command>& newCommands) {
+        for (auto& command : newCommands) {
+            // Move each command into a new CommandNode and add it to m_commands
+            m_commands.push_back({std::make_unique<Command>(command), false});
+        }
+    }
     // void AddCommands(std::initializer_list<Command>& newCommands) {
     //     m_commands.reserve(newCommands.size());
 
@@ -19,28 +35,30 @@ class ParallelCommandGroup : public Command {
     //     }
     // }
 
-    ParallelCommandGroup(std::initializer_list<Command>& commands) {
-        // AddCommands(commands);
-    }
+    ParallelCommandGroup(std::initializer_list<Command>&& commands) {
+        AddCommands(commands);
+    };
+  
+
 
     virtual void Initialize() override {
-        for (std::pair<Command, bool>& node: m_commands) {
-            node.first->Initialize();
-            node.second = true;
+        for (CommandNode &node: m_commands) {
+            node.command->Initialize();
+            node.isRunning = true;
             m_runningCommandCount++;
         }  
     }
     
     
     virtual void Execute() override {
-        for (std::pair<Command, bool>& commandNode: m_commands) {
-            if(commandNode.second) continue;
+        for (CommandNode& commandNode: m_commands) {
+            if(commandNode.isRunning) continue;
 
-            commandNode.first.Execute();
+            commandNode.command->Execute();
 
-            if(commandNode.first.IsFinished()) {
-                commandNode.first.End();
-                commandNode.second = false;
+            if(commandNode.command->IsFinished()) {
+                commandNode.command->End(false);
+                commandNode.isRunning = false;
                 m_runningCommandCount--;
             }
         } 
@@ -50,11 +68,11 @@ class ParallelCommandGroup : public Command {
     virtual void End(bool interrupted) override {
         if (!interrupted) return;
     
-        for (std::pair<Command, bool> &commandNode : m_commands) {
-            if (!commandNode.second) return 
+        for (CommandNode& commandNode : m_commands) {
+            if (!commandNode.isRunning) return 
             
-            commandNode.first.End(true);
-            commandNode.second = false;
+            commandNode.command->End(true);
+            commandNode.isRunning = false;
             m_runningCommandCount--;
         }
     }
