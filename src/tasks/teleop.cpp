@@ -27,18 +27,16 @@ static void drivebase_controls(Controller &controller)
 
 static void intake_controls(Controller &controller)
 {
-    if (controller.get_digital(E_CONTROLLER_DIGITAL_L2))
+    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1))
     {
-        intake->forward();
+        intake->toggleForward();
     }
-    else if (controller.get_digital(E_CONTROLLER_DIGITAL_L1))
+    else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L2))
     {
-        intake->reverse();
+        intake->toggleReverse();
     }
-    else
-    {
-        intake->stop();
-    }
+
+    intake->periodic();
 }
 
 static void clamp_controls(Controller &controller)
