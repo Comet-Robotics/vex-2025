@@ -9,19 +9,19 @@ class SequentialCommandGroup : public Command {
   private:
     int currentCommandIndex = -1;
 
-    std::vector<Command> m_commands;
+    std::vector<std::unique_ptr<Command>> m_commands;
 
   public:
 
-    void AddCommands(const std::initializer_list<Command>& newCommands) {
+    void AddCommands(std::initializer_list<Command>& newCommands) {
         m_commands.reserve(m_commands.size());
 
         for (const Command& command : newCommands) {
-            m_commands.emplace_back(command);
+            m_commands.emplace_back(std::make_unique<Command>(command));
         }
     }
 
-    SequentialCommandGroup(const std::initializer_list<Command>& commands) {
+    SequentialCommandGroup(std::initializer_list<Command>&& commands) {
         AddCommands(commands);
     }
 
@@ -29,7 +29,7 @@ class SequentialCommandGroup : public Command {
        currentCommandIndex = 0;
 
         if (!m_commands.empty()) {
-            m_commands.front().Initialize();
+            m_commands.front()->Initialize();
         }
     }
     
@@ -38,15 +38,15 @@ class SequentialCommandGroup : public Command {
         if (m_commands.empty()) return;
         
 
-        Command currentCommand = m_commands.at(currentCommandIndex);
+        auto& currentCommand = m_commands.at(currentCommandIndex);
 
-        currentCommand.Execute();
-        if (!currentCommand.IsFinished()) {
-            currentCommand.End(false);
+        currentCommand->Execute();
+        if (!currentCommand->IsFinished()) {
+            currentCommand->End(false);
 
             currentCommandIndex++;
             if (currentCommandIndex < m_commands.size()) {
-                m_commands.at(currentCommandIndex).Initialize();
+                m_commands.at(currentCommandIndex)->Initialize();
             }
         }
     }
@@ -57,7 +57,7 @@ class SequentialCommandGroup : public Command {
                 && !m_commands.empty()
                 && currentCommandIndex > -1
                 && currentCommandIndex < m_commands.size()) {
-            m_commands.at(currentCommandIndex).End(true);
+            m_commands.at(currentCommandIndex)->End(true);
         }
         currentCommandIndex = -1;
     }
