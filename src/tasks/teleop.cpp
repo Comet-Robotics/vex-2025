@@ -9,40 +9,31 @@ using namespace pros;
 
 void opcontrol_initialize() {}
 
-static void drivebase_controls(Controller &controller)
-{
-    if constexpr (constants::USE_TANK)
-    {
+static void drivebase_controls(Controller &controller) {
+    if constexpr (constants::USE_TANK) {
         drivebase->tank(
             controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y),
             controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y));
-    }
-    else
-    {
+    } else {
         drivebase->errorDrive(
             controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y),
             controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_X));
     }
 }
 
-static void intake_controls(Controller &controller)
-{
-    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1))
-    {
+static void intake_controls(Controller &controller) {
+    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
         intake->toggleForward();
     }
-    else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L2))
-    {
+    else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
         intake->toggleReverse();
     }
 
     intake->periodic();
 }
 
-static void clamp_controls(Controller &controller)
-{
-    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R1))
-    {
+static void clamp_controls(Controller &controller) {
+    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
         clamp->toggle();
     }
 }
@@ -60,12 +51,10 @@ static void clamp_controls(Controller &controller)
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-void opcontrol()
-{
+void opcontrol() {
     Controller controller(pros::E_CONTROLLER_MASTER);
 
-    while (true)
-    {
+    while (true) {
         pros::lcd::print(0, "Battery: %2.3f V", pros::battery::get_voltage() / 1000.0f);
 
         drivebase_controls(controller);

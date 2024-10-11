@@ -8,7 +8,7 @@ using namespace constants::intake;
 
 enum class IntakeState
 {
-    IDLE,
+    STOPPED,
     REVERSE,
     FORWARD,
 };
@@ -18,69 +18,39 @@ class Intake : public pros::MotorGroup
 public:
     Intake() : pros::MotorGroup({PORTS[0], PORTS[1]}) {}
 
-    void forward()
-    {
-        this->move_voltage(8000);
-    }
+    inline void forward() { this->move_voltage(INTAKE_VOLTAGE); }
 
-    void reverse()
-    {
-        this->move_voltage(-8000);
-    }
+    inline void reverse() { this->move_voltage(-INTAKE_VOLTAGE); }
 
-    void toggleForward()
-    {
-        if (state == IntakeState::FORWARD)
-        {
-            state = IntakeState::IDLE;
-        }
-        else
-        {
+    inline void stop() { this->move_voltage(0); }
+
+    void toggleForward() {
+
+        if (state == IntakeState::FORWARD) {
+            state = IntakeState::STOPPED;
+        } else {
             state = IntakeState::FORWARD;
         }
     }
 
-    void toggleReverse()
-    {
-        if (state == IntakeState::REVERSE)
-        {
-            state = IntakeState::IDLE;
-        }
-        else
-        {
+    void toggleReverse() {
+        if (state == IntakeState::REVERSE) {
+            state = IntakeState::STOPPED;
+        } else {
             state = IntakeState::REVERSE;
         }
     }
 
-    void stop()
-    {
-        this->move_voltage(0);
-    }
-
-    void periodic()
-    {
-        switch (state)
-        {
-        case IntakeState::IDLE:
-        {
-            stop();
-            break;
-        }
-        case IntakeState::FORWARD:
-        {
-            forward();
-            break;
-        }
-        case IntakeState::REVERSE:
-        {
-            reverse();
-            break;
-        }
+    void periodic() {
+        switch (state) {
+            case IntakeState::STOPPED:  return stop();
+            case IntakeState::FORWARD:  return forward();
+            case IntakeState::REVERSE:  return reverse();
         }
     }
 
 private:
-    IntakeState state = IntakeState::IDLE;
+    IntakeState state = IntakeState::STOPPED;
 };
 
 #endif

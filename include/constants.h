@@ -94,6 +94,8 @@ namespace constants
             -20 // right
         };
 
+        inline constexpr int INTAKE_VOLTAGE = 8000;  //mV
+
         // uses basic motors, which doesn't requre gearset to be configured in code
     }
 
