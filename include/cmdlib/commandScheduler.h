@@ -4,6 +4,7 @@
 #include <unordered_set>
 
 #include "command.h"
+#include "eventLoop.h"
 /**  CommandScheduler acts as a singleton which runs all the commands for the robot.
  *  This format allows for commands to be easily created, composed, and executed asynchronously 
  *  from when they are first scheduled.
@@ -12,6 +13,7 @@ class CommandScheduler {
   private:
     static std::unordered_set<Command*> scheduledCommands;
     static CommandScheduler* instance;
+    static EventLoop* m_defaultButtonLoop = new EventLoop();
 
   public:
     
@@ -52,6 +54,15 @@ class CommandScheduler {
                 scheduledCommands.erase(command);
             }
         }
+    }
+
+    /**
+     * Get the default button poll.
+     *
+     * @return a reference to the default {@link EventLoop} object polling buttons.
+    */
+    EventLoop* GetDefaultButtonLoop() {
+        return m_defaultButtonLoop;
     }
 
 

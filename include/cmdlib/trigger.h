@@ -4,6 +4,7 @@
 #include "command.h"
 #include "supplier.h"
 #include "eventLoop.h"
+#include "commandScheduler.h"
 class Trigger : Supplier<bool> {
   private:
     Supplier<bool> m_condition;
@@ -15,11 +16,9 @@ class Trigger : Supplier<bool> {
         m_condition = condition;
     }
 
-    Trigger(Supplier<bool> condition) {
-        m_condition = condition;
-    }
+    Trigger(Supplier<bool> condition) : Trigger(CommandScheduler::GetInstance().GetDefaultButtonLoop(), condition) {}
 
-    Trigger& onTrue(Command command) {
+    Trigger* onTrue(Command command) {
         return this;
     }
 
@@ -29,7 +28,7 @@ class Trigger : Supplier<bool> {
      * @param command the command to start
      * @return this trigger, so calls can be chained
      */
-    Trigger& onFalse(Command command) {
+    Trigger* onFalse(Command command) {
         return this;
     }
 
@@ -43,7 +42,7 @@ class Trigger : Supplier<bool> {
      * @param command the command to start
      * @return this trigger, so calls can be chained
      */
-    Trigger& whileTrue(Command command) {
+    Trigger* whileTrue(Command command) {
         return this;
     }
 
@@ -57,7 +56,7 @@ class Trigger : Supplier<bool> {
      * @param command the command to start
      * @return this trigger, so calls can be chained
      */
-    Trigger& whileFalse(Command command) {
+    Trigger* whileFalse(Command command) {
         return this;
     }
 
@@ -67,7 +66,7 @@ class Trigger : Supplier<bool> {
      * @param command the command to toggle
      * @return this trigger, so calls can be chained
      */
-    Trigger& toggleOnTrue(Command command) {       
+    Trigger* toggleOnTrue(Command command) {       
         return this;
     }
 
@@ -77,7 +76,7 @@ class Trigger : Supplier<bool> {
      * @param command the command to toggle
      * @return this trigger, so calls can be chained
      */
-    Trigger& toggleOnFalse(Command command) {
+    Trigger* toggleOnFalse(Command command) {
         return this;
     }
 
@@ -90,7 +89,7 @@ class Trigger : Supplier<bool> {
      * @param trigger the condition to compose with
      * @return A trigger which is active when both component triggers are active.
      */
-    inline Trigger& and(Supplier<bool>& other) {
+    Trigger* and(Supplier<bool>& other) {
         return new Trigger(new Supplier<bool>(){ return m_condition() && other(); });
     }
 

@@ -3,7 +3,6 @@
 
 #include <set>
 #include <functional>
-// #include "runnable.h"
 class EventLoop {
   private:
     std::vector<std::function<void()>> m_events;
@@ -24,5 +23,5 @@ class EventLoop {
     void clear() {
         m_events.clear();
     }
-}
+};
 #endif
