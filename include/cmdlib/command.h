@@ -54,7 +54,7 @@ class Command {
      *
      * @return whether the command has finished.
      */
-    virtual bool IsFinished() { return false; }
+    virtual bool IsFinished() { return true; }
     
     /**
      * An enum describing the command's behavior when another command with a
