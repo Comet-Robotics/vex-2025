@@ -91,6 +91,8 @@ namespace constants
             nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
             &IMU     // inertial sensor
         );
+
+        inline constexpr int DEFAULT_TIMEOUT = 5000;
     }
 
     namespace intake
