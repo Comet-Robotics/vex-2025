@@ -18,6 +18,18 @@ public:
         this->set_value(isToggled);
     }
 
+    void clamp()
+    {
+        isToggled = true;
+        this->set_value(isToggled);
+    }
+
+    void unclamp()
+    {
+        isToggled = false;
+        this->set_value(isToggled);
+    }
+
 private:
 };
 
