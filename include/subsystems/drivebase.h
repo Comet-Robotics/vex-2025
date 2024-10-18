@@ -35,6 +35,13 @@ public:
         {
             turn /= 1.2;
         }
+
+        int driveSign = drive >= 0 ? 1 : -1;
+        int turnSign = turn >= 0 ? 1 : -1;
+
+        drive = driveSign * pow(drive, 2);
+        turn = turnSign * pow(turn, 2);
+
         LEFT_MOTORS.move_voltage((drive + turn) * 12000);
         RIGHT_MOTORS.move_voltage((drive - turn) * 12000);
     }
