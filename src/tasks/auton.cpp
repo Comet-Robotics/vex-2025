@@ -72,43 +72,25 @@ void autonomousSkillsBlue()
     // score
     drivebase->moveToPoint(-48, 0, DEFAULT_TIMEOUT);
 
-    drivebase->turnToPoint(-24, -48, DEFAULT_TIMEOUT, {false});
-    drivebase->moveToPoint(-24, -48, DEFAULT_TIMEOUT, {false}, false);
-    // clamp
+    drivebase->turnAndMoveToPoint(-24, -48, DEFAULT_TIMEOUT, {false}, {false}, false);
+    clamp->clamp();
+    pros::delay(300);
 
-    drivebase->turnToPoint(0, -48, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(0, -48, DEFAULT_TIMEOUT);
+    drivebase->turnAndMoveToPoint(0, -48, DEFAULT_TIMEOUT);
+    intake->forward();
 
-    drivebase->turnToPoint(0, -60, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(0, -60, DEFAULT_TIMEOUT);
-
-    drivebase->turnToPoint(-24, -24, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(-24, -24, DEFAULT_TIMEOUT);
-
-    drivebase->turnToPoint(-60, -60, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(-60, -60, DEFAULT_TIMEOUT);
-
-    
-
+    drivebase->turnAndMoveToPoint(0, -60, DEFAULT_TIMEOUT);
+    drivebase->turnAndMoveToPoint(-24, -24, DEFAULT_TIMEOUT);
+    drivebase->turnAndMoveToPoint(-60, -60, DEFAULT_TIMEOUT);
 
     // purple section
     
-    drivebase->turnToPoint(23.5, -23.5, DEFAULT_TIMEOUT, {false});
-    drivebase->moveToPoint(23.5, -23.5, DEFAULT_TIMEOUT, {false});
+    drivebase->turnAndMoveToPoint(-23.5, -23.5, DEFAULT_TIMEOUT, {false}, {false}, false);
 
-    // clamp goal
-
-    drivebase->turnToPoint(23.5, -47.5, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(23.5, -47.5, DEFAULT_TIMEOUT); // intake ring
-    
-    drivebase->turnToPoint(47.5, -47.5, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(47.5, -47.5, DEFAULT_TIMEOUT); // intake ring
-
-    drivebase->turnToPoint(47.5, -23.5, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(47.5, -23.5, DEFAULT_TIMEOUT); // intake ring
-
-    drivebase->turnToPoint(66.5, -66.5, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(66.5, -66.5, DEFAULT_TIMEOUT); // put goal in corner
+    drivebase->turnAndMoveToPoint(23.5, -47.5, DEFAULT_TIMEOUT); // intake ring
+    drivebase->turnAndMoveToPoint(47.5, -47.5, DEFAULT_TIMEOUT); // intake ring
+    drivebase->turnAndMoveToPoint(47.5, -23.5, DEFAULT_TIMEOUT); // intake ring
+    drivebase->turnAndMoveToPoint(-66.5, -66.5, DEFAULT_TIMEOUT); // put goal in corner
 
     // finished!
 

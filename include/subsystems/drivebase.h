@@ -46,6 +46,12 @@ public:
         RIGHT_MOTORS.move_voltage((drive - turn) * 12000);
     }
 
+    void turnAndMoveToPoint(int x, int y, int timeout, lemlib::TurnToPointParams turnParams = {}, lemlib::MoveToPointParams moveParams = {}, bool async = true)
+    {
+        turnToPoint(x, y, timeout, turnParams, async);
+        moveToPoint(x, y, timeout, moveParams, async);
+    }
+
 private:
 };
 
