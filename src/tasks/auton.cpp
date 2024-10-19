@@ -69,8 +69,11 @@ void autonomousSkillsBlue()
 {
     drivebase->setPose(-60, 0, 90);
     
-    // score
+    intake->forward();
+    // wait some amount of time?
     drivebase->moveToPoint(-48, 0, DEFAULT_TIMEOUT);
+    // wait some more amount of time? although probably better to use sensor here
+    intake->stop();
 
     drivebase->turnAndMoveToPoint(-24, -48, DEFAULT_TIMEOUT, {false}, {false}, false);
     clamp->clamp();
@@ -86,11 +89,13 @@ void autonomousSkillsBlue()
     // purple section
     
     drivebase->turnAndMoveToPoint(-23.5, -23.5, DEFAULT_TIMEOUT, {false}, {false}, false);
+    clamp->clamp();
 
     drivebase->turnAndMoveToPoint(23.5, -47.5, DEFAULT_TIMEOUT); // intake ring
     drivebase->turnAndMoveToPoint(47.5, -47.5, DEFAULT_TIMEOUT); // intake ring
     drivebase->turnAndMoveToPoint(47.5, -23.5, DEFAULT_TIMEOUT); // intake ring
     drivebase->turnAndMoveToPoint(-66.5, -66.5, DEFAULT_TIMEOUT); // put goal in corner
+    clamp->unclamp();
 
     // finished!
 
