@@ -7,7 +7,7 @@
 using namespace constants::drivebase;
 class Drivebase : public lemlib::Chassis
 {
-public:
+  public:
     Drivebase() : lemlib::Chassis(DRIVETRAIN, LATERAL_CONTROLLER, ANGULAR_CONTROLLER, SENSORS) {}
 
     void calibrateChassis(bool useIMU)
@@ -28,17 +28,11 @@ public:
     {
         drive /= 127.0;
         turn /= 127.0;
-        if (drive < 0.5)
-        {
-            turn /= 1.4;
-        }
-        else
-        {
-            turn /= 1.2;
-        }
 
-        int driveSign = drive >= 0 ? 1 : -1;
-        int turnSign = turn >= 0 ? 1 : -1;
+        turn /= ((drive < 0.5) ? 1.5 : 1.2);
+
+        int driveSign = ((drive >= 0) ? 1 : -1);
+        int turnSign = ((turn >= 0 ? 1) : -1);
 
         drive = driveSign * pow(drive, 2);
         turn = turnSign * pow(turn, 2);
@@ -53,7 +47,7 @@ public:
         moveToPoint(x, y, timeout, moveParams, async);
     }
 
-private:
+  private:
 };
 
 #endif
