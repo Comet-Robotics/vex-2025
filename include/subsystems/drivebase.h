@@ -2,6 +2,7 @@
 #define __SUBSYSTEMS_DRIVEBASE_H__
 
 #include "constants.h"
+#include <cmath>
 
 using namespace constants::drivebase;
 class Drivebase : public lemlib::Chassis
@@ -46,7 +47,7 @@ public:
         RIGHT_MOTORS.move_voltage((drive - turn) * 12000);
     }
 
-    void turnAndMoveToPoint(int x, int y, int timeout, lemlib::TurnToPointParams turnParams = {}, lemlib::MoveToPointParams moveParams = {}, bool async = true)
+    void turnAndMoveToPoint(double x, double y, int timeout, lemlib::TurnToPointParams turnParams = {}, lemlib::MoveToPointParams moveParams = {}, bool async = true)
     {
         turnToPoint(x, y, timeout, turnParams, async);
         moveToPoint(x, y, timeout, moveParams, async);

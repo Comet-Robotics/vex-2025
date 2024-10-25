@@ -33,17 +33,13 @@ void autonomousTest()
 
 void autonomousSkills()
 {
-
-    drivebase->setPose(-60, 0, 90);
-    
-    drivebase->turnToPoint(-48, -48, 5000);
-    drivebase->moveToPoint(-48, -48, 5000);
+    //once we create seperate code for each robot, their code will go here
 }
 
 //port whichever over to the other bot later whenever we code that
 void autonomousSkillsRed()
 {
-    drivebase->setPose(-61, 4, 90);
+    drivebase->setPose(-60, 4, 90);
     
     intake->forward();
     drivebase->moveToPoint(-47, 47, DEFAULT_TIMEOUT, {}, false);

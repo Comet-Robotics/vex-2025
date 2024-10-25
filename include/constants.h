@@ -4,7 +4,7 @@
 #include "pros/abstract_motor.hpp"
 #include <array>
 #include <cstdint>
-#include "lemlib/api.hpp"
+#include "lemlib/chassis/chassis.hpp"
 
 namespace constants
 {
