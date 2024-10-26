@@ -25,7 +25,6 @@ public:
     inline void stop() { this->move_voltage(0); }
 
     void toggleForward() {
-
         if (state == IntakeState::FORWARD) {
             state = IntakeState::STOPPED;
         } else {

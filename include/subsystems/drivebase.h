@@ -19,10 +19,7 @@ class Drivebase : public lemlib::Chassis
         }
     }
 
-    pros::IMU getIMU()
-    {
-        return IMU;
-    }
+    pros::IMU getIMU() { return IMU; }
 
     void errorDrive(float drive, float turn)
     {
@@ -31,8 +28,8 @@ class Drivebase : public lemlib::Chassis
 
         turn /= ((drive < 0.5) ? 1.5 : 1.2);
 
-        int driveSign = ((drive >= 0) ? 1 : -1);
-        int turnSign = ((turn >= 0 ? 1) : -1);
+        int driveSign = ((drive >= 0)? 1 : -1);
+        int turnSign  = ((turn >= 0)?  1 : -1);
 
         drive = driveSign * pow(drive, 2);
         turn = turnSign * pow(turn, 2);
@@ -46,7 +43,6 @@ class Drivebase : public lemlib::Chassis
         turnToPoint(x, y, timeout, turnParams, async);
         moveToPoint(x, y, timeout, moveParams, async);
     }
-
   private:
 };
 

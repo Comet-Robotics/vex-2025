@@ -22,14 +22,24 @@ static void drivebase_controls(Controller &controller) {
 }
 
 static void intake_controls(Controller &controller) {
-    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
-        intake->toggleForward();
-    }
-    else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
-        intake->toggleReverse();
-    }
+    if constexpr (constants::intake::USE_TOGGLE_INTAKE) {
+        if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
+            intake->toggleForward();
+        }
+        else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
+            intake->toggleReverse();
+        }
 
-    intake->periodic();
+        intake->periodic();
+    } else {
+        if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
+            intake->forward();
+        } else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
+            intake->reverse();
+        } else {
+            intake->stop();
+        }
+    }
 }
 
 static void clamp_controls(Controller &controller) {
