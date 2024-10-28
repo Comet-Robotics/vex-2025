@@ -10,7 +10,7 @@ using namespace pros;
 void opcontrol_initialize() {}
 
 static void drivebase_controls(Controller &controller) {
-    if constexpr (constants::USE_TANK) {
+    if constexpr (constants::drivebase::USE_TANK) {
         drivebase->tank(
             controller.get_analog(E_CONTROLLER_ANALOG_LEFT_Y),
             controller.get_analog(E_CONTROLLER_ANALOG_RIGHT_Y));
@@ -22,7 +22,7 @@ static void drivebase_controls(Controller &controller) {
 }
 
 static void intake_controls(Controller &controller) {
-    if constexpr (constants::intake::USE_TOGGLE_INTAKE) {
+    if constexpr (constants::intake::USE_TOGGLE) {
         if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
             intake->toggleForward();
         }
