@@ -38,10 +38,22 @@ class Drivebase : public lemlib::Chassis
         RIGHT_MOTORS.move_voltage((drive - turn) * 12000);
     }
 
-    void turnAndMoveToPoint(double x, double y, int timeout, lemlib::TurnToPointParams turnParams = {}, lemlib::MoveToPointParams moveParams = {}, bool async = true)
+    void turnThenMoveToPoint(double x, double y, int timeout = DEFAULT_TIMEOUT, lemlib::TurnToPointParams turnParams = {}, lemlib::MoveToPointParams moveParams = {}, bool async = true)
     {
         turnToPoint(x, y, timeout, turnParams, async);
         moveToPoint(x, y, timeout, moveParams, async);
+    }
+
+    void turnThenMoveToPoint(double x, double y, bool async)
+    {
+        turnToPoint(x, y, DEFAULT_TIMEOUT, {}, async);
+        moveToPoint(x, y, DEFAULT_TIMEOUT, {}, async);
+    }
+
+    void waitUntilStationary(uint32_t interval = 20 /*ms*/) {
+      while (drivebase->isInMotion()) {
+        pros::delay(20);
+      }
     }
   private:
 };
