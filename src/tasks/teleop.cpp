@@ -42,6 +42,27 @@ static void intake_controls(Controller &controller) {
     }
 }
 
+static void elevator_controls(Controller &controller) {
+    if constexpr (constants::elevator::USE_TOGGLE) {
+        if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
+            elevator->toggleForward();
+        }
+        else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L2)) {
+            elevator->toggleReverse();
+        }
+
+        elevator->periodic();
+    } else {
+        if (controller.get_digital(E_CONTROLLER_DIGITAL_L1)) {
+            elevator->forward();
+        } else if (controller.get_digital(E_CONTROLLER_DIGITAL_L2)) {
+            elevator->reverse();
+        } else {
+            elevator->stop();
+        }
+    }
+}
+
 static void clamp_controls(Controller &controller) {
     if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
         clamp->toggle();

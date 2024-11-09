@@ -108,6 +108,20 @@ namespace constants
         // uses basic motors, which doesn't requre gearset to be configured in code
     }
 
+    namespace elevator
+    {
+        inline constexpr std::array<int8_t, 2> PORTS = {
+            //TODO change these to be correct
+            0, // left
+            0 // right
+        };
+
+        inline const bool USE_TOGGLE = true;
+
+        inline constexpr int ELEVATOR_VOLTAGE = 12000; // mV
+        // uses basic motors, which doesn't requre gearset to be configured in code
+    }
+
     namespace clamp
     {
         inline constexpr char PORT = 'F';
