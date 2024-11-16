@@ -18,7 +18,7 @@ class Elevator : public pros::MotorGroup
 public:
 
 
-    Elevator() : pros::MotorGroup({PORTS[0], PORTS[1]}) {}
+    Elevator() : pros::MotorGroup({ELEVATOR_PORTS[0], ELEVATOR_PORTS[1]}) {}
 
     inline void forward() { this->move_voltage(ELEVATOR_VOLTAGE); }
 

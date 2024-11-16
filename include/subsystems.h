@@ -4,6 +4,7 @@
 #include "subsystems/drivebase.h"
 #include "subsystems/intake.h"
 #include "subsystems/clamp.h"
+#include "subsystems/elevator.h"
 
 inline Drivebase *drivebase = nullptr;
 inline Intake *intake = nullptr;

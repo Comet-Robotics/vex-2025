@@ -22,8 +22,10 @@ inline constexpr AutonMode MODE = AutonMode::TEST;
 
 void autonomousTest()
 {
-    // drivebase->turnToHeading(90, 100000);
-    // drivebase->moveToPoint(0, 10, 100000);
+    // set position to x:0, y:0, heading:0
+    drivebase->setPose(0, 0, 0);
+    // turn to face heading 90 with a very long timeout
+    drivebase->turnToHeading(90, 100000);
 
     controller.print(0, 0, "X: %f", drivebase->getPose().x);
     controller.print(1, 0, "Y: %f", drivebase->getPose().y);

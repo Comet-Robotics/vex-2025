@@ -15,18 +15,18 @@ namespace constants
         inline constexpr bool USE_TANK = false;
         // front, middle, back, top
         inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
-            15,
-            -16,
-            -5,
-            18
+            16,
+            -17,
+            -18,
+            20
         };
 
         // front, middle, back, top
         inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
-            -6,
+            -9,
             7,
             8,
-            -9
+            -10
         };
 
         inline constexpr double DRIVETRAIN_WIDTH = 11.292; // this is CAD based and will require tuning
@@ -97,9 +97,8 @@ namespace constants
 
     namespace intake
     {
-        inline constexpr std::array<int8_t, 2> PORTS = {
-            10, // left
-            -20 // right
+        inline constexpr std::array<int8_t, 2> INTAKE_PORTS = {
+            14
         };
 
         inline const bool USE_TOGGLE = true;
@@ -110,7 +109,7 @@ namespace constants
 
     namespace elevator
     {
-        inline constexpr std::array<int8_t, 2> PORTS = {
+        inline constexpr std::array<int8_t, 2> ELEVATOR_PORTS = {
             //TODO change these to be correct
             0, // left
             0 // right
@@ -124,7 +123,7 @@ namespace constants
 
     namespace clamp
     {
-        inline constexpr char PORT = 'F';
+        inline constexpr char PORT = 'A';
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms

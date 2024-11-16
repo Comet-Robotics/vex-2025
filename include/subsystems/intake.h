@@ -16,7 +16,7 @@ enum class IntakeState
 class Intake : public pros::MotorGroup
 {
 public:
-    Intake() : pros::MotorGroup({PORTS[0], PORTS[1]}) {}
+    Intake() : pros::MotorGroup({INTAKE_PORTS[0], INTAKE_PORTS[1]}) {}
 
     inline void forward() { this->move_voltage(INTAKE_VOLTAGE); }
 

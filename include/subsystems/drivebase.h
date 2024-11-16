@@ -28,11 +28,11 @@ class Drivebase : public lemlib::Chassis
 
         turn /= ((drive < 0.5) ? 1.5 : 1.2);
 
-        int driveSign = ((drive >= 0)? 1 : -1);
-        int turnSign  = ((turn >= 0)?  1 : -1);
+        // int driveSign = ((drive >= 0)? 1 : -1);
+        // int turnSign  = ((turn >= 0)?  1 : -1);
 
-        drive = driveSign * pow(drive, 2);
-        turn = turnSign * pow(turn, 2);
+        // drive = driveSign * pow(drive, 2);
+        // turn = turnSign * pow(turn, 2);
 
         LEFT_MOTORS.move_voltage((drive + turn) * 12000);
         RIGHT_MOTORS.move_voltage((drive - turn) * 12000);
@@ -51,7 +51,7 @@ class Drivebase : public lemlib::Chassis
     }
 
     void waitUntilStationary(uint32_t interval = 20 /*ms*/) {
-      while (drivebase->isInMotion()) {
+      while (isInMotion()) {
         pros::delay(20);
       }
     }
