@@ -30,33 +30,33 @@ namespace constants
         };
 
         inline constexpr double DRIVETRAIN_WIDTH = 11.292; // this is CAD based and will require tuning
-        inline constexpr int8_t IMU_PORT = 0;
+        inline constexpr int8_t IMU_PORT = 6;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
 
         // lateral PID controller
         inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
-            0,   // proportional gain (kP)
+            10,   // proportional gain (kP)
             0,   // integral gain (kI)
-            0,   // derivative gain (kD)
-            3,   // anti windup
-            1,   // small error range, in inches
-            100, // small error range timeout, in milliseconds
-            3,   // large error range, in inches
-            500, // large error range timeout, in milliseconds
-            20   // maximum acceleration (slew)
+            3,   // derivative gain (kD)
+            0,   // anti windup
+            0,   // small error range, in inches
+            0, // small error range timeout, in milliseconds
+            0,   // large error range, in inches
+            0, // large error range timeout, in milliseconds
+            0   // maximum acceleration (slew)
         );
 
         // angular PID controller
         inline const lemlib::ControllerSettings ANGULAR_CONTROLLER(
-            0, // proportional gain (kP)
+            10, // proportional gain (kP) - 10/12
             0, // integral gain (kI)
-            0, // derivative gain (kD)
-            0, // 3, // anti windup
-            0, // 1, // small error range, in degrees
-            0, // 100, // small error range timeout, in milliseconds
-            0, // 3, // large error range, in degrees
-            0, // 500, // large error range timeout, in milliseconds
+            75,// derivative gain (kD) - 75/80
+            3, // 3, // anti windup
+            1, // 1, // small error range, in degrees
+            100, // 100, // small error range timeout, in milliseconds
+            3, // 3, // large error range, in degrees
+            500, // 500, // large error range timeout, in milliseconds
             0  // maximum acceleration (slew)
         );
 

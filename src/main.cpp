@@ -14,7 +14,6 @@
 void initialize()
 {
 	pros::lcd::initialize();
-	pros::lcd::set_text(1, "Hello PROS User!");
 
 	subsystems_initialize();
 	autonomous_initialize();

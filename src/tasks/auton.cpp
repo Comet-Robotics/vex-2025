@@ -1,7 +1,11 @@
 #include "pros/misc.h"
 #include "pros/misc.hpp"
+#include "pros/llemu.hpp"
 #include "subsystems.h"
 #include "tasks/auton.h"
+#include "constants.h"
+
+using namespace pros;
 
 pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
@@ -22,14 +26,21 @@ inline constexpr AutonMode MODE = AutonMode::TEST;
 
 void autonomousTest()
 {
+    drivebase->calibrateChassis(true);
+
     // set position to x:0, y:0, heading:0
     drivebase->setPose(0, 0, 0);
-    // turn to face heading 90 with a very long timeout
-    drivebase->turnToHeading(90, 100000);
+    // move to (0, 48)
+    drivebase->moveToPoint(0, 36, 5000, {}, false);
 
-    controller.print(0, 0, "X: %f", drivebase->getPose().x);
-    controller.print(1, 0, "Y: %f", drivebase->getPose().y);
-    controller.print(2, 0, "Theta: %f", drivebase->getPose().theta);
+    pros::delay(100);
+    lcd::print(0, "X: %f", drivebase->getPose().x);
+    lcd::print(1, "Y: %f", drivebase->getPose().y);
+    lcd::print(2, "Theta: %f", drivebase->getPose().theta);
+
+    pros::delay(3000);
+
+    drivebase->turnToHeading(180, 5000);
 }
 
 void autonomousSkills()
