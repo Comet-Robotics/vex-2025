@@ -15,30 +15,30 @@ namespace constants
         inline constexpr bool USE_TANK = false;
         // front, middle, back, top
         inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
-            16,
-            -17,
-            -18,
-            20
+            0,
+            0,
+            0,
+            0
         };
 
         // front, middle, back, top
         inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
-            -9,
-            7,
-            8,
-            -10
+            0,
+            0,
+            0,
+            0
         };
 
-        inline constexpr double DRIVETRAIN_WIDTH = 11.292; // this is CAD based and will require tuning
-        inline constexpr int8_t IMU_PORT = 6;
+        inline constexpr double DRIVETRAIN_WIDTH = 0; 
+        inline constexpr int8_t IMU_PORT = 0;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
 
         // lateral PID controller
         inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
-            10,   // proportional gain (kP)
+            0,   // proportional gain (kP)
             0,   // integral gain (kI)
-            3,   // derivative gain (kD)
+            0,   // derivative gain (kD)
             0,   // anti windup
             0,   // small error range, in inches
             0, // small error range timeout, in milliseconds
@@ -49,15 +49,15 @@ namespace constants
 
         // angular PID controller
         inline const lemlib::ControllerSettings ANGULAR_CONTROLLER(
-            10, // proportional gain (kP) - 10/12
-            0, // integral gain (kI)
-            75,// derivative gain (kD) - 75/80
-            3, // 3, // anti windup
-            1, // 1, // small error range, in degrees
-            100, // 100, // small error range timeout, in milliseconds
-            3, // 3, // large error range, in degrees
-            500, // 500, // large error range timeout, in milliseconds
-            0  // maximum acceleration (slew)
+            0, // proportional gain (kP)
+            0,// integral gain (kI)
+            0,// derivative gain (kD)
+            0, // anti windup
+            0, // small error range, in degrees
+            0, // small error range timeout, in milliseconds
+            0, // large error range, in degrees
+            0, // large error range timeout, in milliseconds
+            0// maximum acceleration (slew)
         );
 
         inline pros::MotorGroup LEFT_MOTORS({LEFT_PORTS[0],
@@ -98,7 +98,8 @@ namespace constants
     namespace intake
     {
         inline constexpr std::array<int8_t, 2> INTAKE_PORTS = {
-            14
+            0,
+            0
         };
 
         inline const bool USE_TOGGLE = true;
@@ -123,7 +124,7 @@ namespace constants
 
     namespace clamp
     {
-        inline constexpr char PORT = 'A';
+        inline constexpr char PORT = '0';
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms
