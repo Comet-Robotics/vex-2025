@@ -16,8 +16,6 @@ enum class ElevatorState
 class Elevator : public pros::MotorGroup
 {
 public:
-
-
     Elevator() : pros::MotorGroup({ELEVATOR_PORTS[0], ELEVATOR_PORTS[1]}) {}
 
     inline void forward() { this->move_voltage(ELEVATOR_VOLTAGE); }

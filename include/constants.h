@@ -1,7 +1,9 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include "lemlib/chassis/trackingWheel.hpp"
 #include "pros/abstract_motor.hpp"
+#include "pros/rotation.hpp"
 #include <array>
 #include <cstdint>
 #include "lemlib/chassis/chassis.hpp"
@@ -13,23 +15,23 @@ namespace constants
     namespace drivebase
     {
         inline constexpr bool USE_TANK = false;
-        // front, middle, back, top
+        // front, back, top front, top back
         inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
             0,
             0,
-            0,
-            0
+            -0,
+            -0
         };
 
-        // front, middle, back, top
+        // front, back, top front, top back
         inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
             0,
             0,
-            0,
-            0
+            -0,
+            -0
         };
 
-        inline constexpr double DRIVETRAIN_WIDTH = 0; 
+        inline constexpr double DRIVETRAIN_WIDTH = 11.25; //tune this 
         inline constexpr int8_t IMU_PORT = 0;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
@@ -84,11 +86,19 @@ namespace constants
             2                           // horizontal drift is 2 (for now)
         );
 
+        inline pros::Rotation VERTICAL_ROTATION( 0 );
+    
+        inline lemlib::TrackingWheel VERTICAL_TRACKING (
+            &VERTICAL_ROTATION, // rotation sensor
+            lemlib::Omniwheel::NEW_2, // wheel diameter
+            0 // distance from center of rotation
+        );
+
         inline lemlib::OdomSensors SENSORS(
-            nullptr, // vertical tracking wheel 1
-            nullptr, // vertical tracking wheel 2, set to nullptr as we are using two wheel
+            &VERTICAL_TRACKING, // vertical tracking wheel 1
+            nullptr,
             nullptr, // horizontal tracking wheel 1
-            nullptr, // horizontal tracking wheel 2, set to nullptr as we don't have a second one
+            nullptr,
             &IMU     // inertial sensor
         );
 
@@ -98,11 +108,11 @@ namespace constants
     namespace intake
     {
         inline constexpr std::array<int8_t, 2> INTAKE_PORTS = {
-            0,
-            0
+            -10, // left
+            9 // right
         };
 
-        inline const bool USE_TOGGLE = true;
+        inline const bool USE_TOGGLE = false;
 
         inline constexpr int INTAKE_VOLTAGE = 12000; // mV
         // uses basic motors, which doesn't requre gearset to be configured in code
@@ -111,20 +121,19 @@ namespace constants
     namespace elevator
     {
         inline constexpr std::array<int8_t, 2> ELEVATOR_PORTS = {
-            //TODO change these to be correct
-            0, // left
-            0 // right
+            19, // left
+            -20 // right
         };
 
-        inline const bool USE_TOGGLE = true;
+        inline const bool USE_TOGGLE = false;
 
-        inline constexpr int ELEVATOR_VOLTAGE = 12000; // mV
+        inline constexpr int ELEVATOR_VOLTAGE = 8000; // mV
         // uses basic motors, which doesn't requre gearset to be configured in code
     }
 
     namespace clamp
     {
-        inline constexpr char PORT = '0';
+        inline constexpr char PORT = 'A';
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms

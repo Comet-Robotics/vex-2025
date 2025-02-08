@@ -205,7 +205,7 @@ void autonomousSkillsBlue()
     // move to corner backwards and drop goal
     drivebase->turnThenMoveToPoint(60, -60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false); // put goal in corner
     clamp->unclamp();
-    //go to the 911 tower and climb
+    //go to the tower and climb
     // finished!
 
     //Consider partner climbing in auton for points

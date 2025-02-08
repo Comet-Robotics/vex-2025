@@ -90,6 +90,7 @@ void opcontrol() {
 
         drivebase_controls(controller);
         intake_controls(controller);
+        elevator_controls(controller);
         clamp_controls(controller);
 
         pros::delay(constants::TELEOP_POLL_TIME);
