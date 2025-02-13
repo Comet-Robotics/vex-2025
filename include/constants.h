@@ -17,22 +17,22 @@ namespace constants
         inline constexpr bool USE_TANK = false;
         // front, back, top front, top back
         inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
-            0,
-            0,
-            -0,
-            -0
+            8,
+            14,
+            -7,
+            -9
         };
 
         // front, back, top front, top back
         inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
-            0,
-            0,
-            -0,
-            -0
+            -18,
+            -20,
+            17,
+            19
         };
 
         inline constexpr double DRIVETRAIN_WIDTH = 11.25; //tune this 
-        inline constexpr int8_t IMU_PORT = 0;
+        inline constexpr int8_t IMU_PORT = 5;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
 
@@ -108,8 +108,8 @@ namespace constants
     namespace intake
     {
         inline constexpr std::array<int8_t, 2> INTAKE_PORTS = {
-            -10, // left
-            9 // right
+            -15, // left
+            4 // right
         };
 
         inline const bool USE_TOGGLE = false;
@@ -121,8 +121,8 @@ namespace constants
     namespace elevator
     {
         inline constexpr std::array<int8_t, 2> ELEVATOR_PORTS = {
-            19, // left
-            -20 // right
+            6, // left
+            -16 // right
         };
 
         inline const bool USE_TOGGLE = false;
@@ -134,6 +134,19 @@ namespace constants
     namespace clamp
     {
         inline constexpr char PORT = 'A';
+    }
+
+    namespace arm
+    {
+        inline constexpr std::array<int8_t, 2> ARM_PORTS = {
+            -10, // left
+            2 // right
+        };
+
+        inline const bool USE_TOGGLE = true;
+        inline const pros::motor_brake_mode_e BRAKE_MODE = pros::E_MOTOR_BRAKE_BRAKE;
+
+        inline constexpr int ARM_VOLTAGE = 12000; // mV
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms

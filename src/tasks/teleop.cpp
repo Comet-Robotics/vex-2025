@@ -63,6 +63,27 @@ static void elevator_controls(Controller &controller) {
     }
 }
 
+static void arm_controls(Controller &controller) {
+    if constexpr (constants::elevator::USE_TOGGLE) {
+        if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_UP)) {
+            arm->toggleForward();
+        }
+        else if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_DOWN)) {
+            arm->toggleReverse();
+        }
+
+        arm->periodic();
+    } else {
+        if (controller.get_digital(E_CONTROLLER_DIGITAL_UP)) {
+            arm->forward();
+        } else if (controller.get_digital(E_CONTROLLER_DIGITAL_DOWN)) {
+            arm->reverse();
+        } else {
+            arm->stop();
+        }
+    }
+}
+
 static void clamp_controls(Controller &controller) {
     if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_R1)) {
         clamp->toggle();
@@ -92,6 +113,7 @@ void opcontrol() {
         intake_controls(controller);
         elevator_controls(controller);
         clamp_controls(controller);
+        arm_controls(controller);
 
         pros::delay(constants::TELEOP_POLL_TIME);
     }
