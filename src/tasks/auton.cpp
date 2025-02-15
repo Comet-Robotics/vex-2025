@@ -22,7 +22,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::TEST;
+inline constexpr AutonMode MODE = AutonMode::SKILLS;
 
 void autonomousTest()
 {
@@ -30,22 +30,21 @@ void autonomousTest()
 
     // set position to x:0, y:0, heading:0
     drivebase->setPose(0, 0, 0);
-    // move to (0, 48)
-    drivebase->moveToPoint(0, 36, 5000, {}, false);
 
     pros::delay(100);
     lcd::print(0, "X: %f", drivebase->getPose().x);
     lcd::print(1, "Y: %f", drivebase->getPose().y);
     lcd::print(2, "Theta: %f", drivebase->getPose().theta);
+    lcd::print(3, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
 
     pros::delay(3000);
 
-    drivebase->turnToHeading(180, 5000);
-}
+    drivebase->moveToPoint(0, -48, 5000, {.forwards = false}, true);
 
-void autonomousSkills()
-{
-    // once we create seperate code for each robot, their code will go here
+    lcd::print(0, "X: %f", drivebase->getPose().x);
+    lcd::print(1, "Y: %f", drivebase->getPose().y);
+    lcd::print(2, "Theta: %f", drivebase->getPose().theta);
+    lcd::print(3, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
 }
 
 ASSET(avoidTowerRed_txt)
@@ -57,7 +56,7 @@ void autonomousSkillsRed()
 
     // Move to the first ring
     intake->forward();
-    drivebase->moveToPoint(-47, 47, DEFAULT_TIMEOUT, {}, false);
+    drivebase->turnThenMoveToPoint(-47, 47, DEFAULT_TIMEOUT);
 
     // Go get the mobile goal
     drivebase->turnThenMoveToPoint(-29, 47, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
@@ -68,7 +67,7 @@ void autonomousSkillsRed()
 
     // Go get the next rings in sequence
     intake->forward();
-    drivebase->turnThenMoveToPoint(-47, 47); // 
+    drivebase->turnThenMoveToPoint(-24, 24); // 
     drivebase->turnThenMoveToPoint(0, 47);
     drivebase->turnThenMoveToPoint(0, 59);
     
@@ -218,6 +217,13 @@ void autonomousSkillsBlue()
     
 }
 
+void autonomousSkills()
+{
+    // once we create seperate code for each robot, their code will go here
+    autonomousSkillsRed();
+}
+
+
 void autonomousVS()
 {
 }
@@ -239,5 +245,5 @@ void autonomous()
 
 void autonomous_initialize()
 {
-    
+    drivebase->calibrateChassis(true);
 };

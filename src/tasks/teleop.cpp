@@ -115,6 +115,8 @@ void opcontrol() {
         clamp_controls(controller);
         arm_controls(controller);
 
+        pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
+
         pros::delay(constants::TELEOP_POLL_TIME);
     }
 }
