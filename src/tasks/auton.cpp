@@ -62,12 +62,11 @@ void autonomousSkillsRed()
     drivebase->turnThenMoveToPoint(-29, 47, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     clamp->clamp();
     pros::delay(200);
-    elevator->forward(); // score 2 rings (1 preload, 1 from field)
+    elevator->forward(); // score ring from field
     
 
     // Go get the next rings in sequence
-    intake->forward();
-    drivebase->turnThenMoveToPoint(-24, 24); // 
+    drivebase->turnThenMoveToPoint(-24, 24);
     drivebase->turnThenMoveToPoint(0, 47);
     drivebase->turnThenMoveToPoint(0, 59);
     
@@ -88,23 +87,22 @@ void autonomousSkillsRed()
     // Move out of the corner 
     drivebase->turnThenMoveToPoint(-50, 50);
     
-    //avoid the middle while moving towards the next mobile goal (choose between these)
+    //avoid the middle while going to the next mobile goal (choose between these)
     // drivebase->follow(avoidTowerRed_txt, 15, DEFAULT_TIMEOUT, false); 
     drivebase->turnThenMoveToPoint(0, 47);
-    
-    // Go the the mobile goal and clamp it
     drivebase->turnThenMoveToPoint(24, 24,  DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    
+    // Clamp mobile goal
     clamp->clamp();
+    pros::delay(200);
     intake->forward();
     elevator->forward();
 
     // Go get the 4 rings in the middle
-    drivebase->turnThenMoveToPoint(3.6, 3.6);
-    drivebase->turnThenMoveToPoint(-1.8, 3.6);
-    drivebase->turnThenMoveToPoint(-1.8, -1.8);
-    drivebase->turnThenMoveToPoint(1.8, -1.8); // might be able to just be turn to point
-
-
+    drivebase->turnThenMoveToPoint(3, 3);
+    drivebase->turnThenMoveToPoint(-6, 3);
+    drivebase->turnThenMoveToPoint(-3, -6);
+    drivebase->turnThenMoveToPoint(6, -6); // might be able to just be turn to point
 
     // Get the other two rings
     drivebase->turnThenMoveToPoint(24, 48);
@@ -153,28 +151,30 @@ void autonomousSkillsRed()
 ASSET(avoidTower_txt)
 void autonomousSkillsBlue()
 {
-    drivebase->setPose(-60, 0, 90);
+    drivebase->setPose(-64, 0, 90);
     
     intake->forward();
-    pros::delay(500);
     drivebase->moveToPoint(-48, 0, DEFAULT_TIMEOUT);
-    
-    // wait some more amount of time? although probably better to use sensor here
-    intake->stop();
+    drivebase->moveToPoint(-65, 0, DEFAULT_TIMEOUT, {.forwards = false}, false); // consider making async and adding small delay if needed
+    elevator->forward();
+    pros::delay(1000);
 
+    drivebase->moveToPoint(-60, 0, DEFAULT_TIMEOUT);
     drivebase->turnThenMoveToPoint(-24, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     clamp->clamp();
-    intake->forward(); //Maybe move intake after delay
+    intake->forward();
     pros::delay(300);
 
     drivebase->turnThenMoveToPoint(0, -47);
 
     drivebase->turnThenMoveToPoint(0, -60);
     drivebase->turnThenMoveToPoint(-24, -24);
-    drivebase->turnThenMoveToPoint(-60, -60); //Make sure it actually intakes/goes without hitting wall
-    drivebase->moveToPoint(-50, -50, DEFAULT_TIMEOUT, {.forwards=false});
+    drivebase->turnThenMoveToPoint(-60, -60); // Make sure it actually intakes/goes without hitting wall
+    drivebase->moveToPoint(-50, -50, DEFAULT_TIMEOUT, {.forwards=false}); // Tune exact value later
     drivebase->turnThenMoveToPoint(-60, -60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     clamp->unclamp();
+
+    elevator->stop();
 
     // purple section
     
@@ -184,20 +184,18 @@ void autonomousSkillsBlue()
     // avoid tower (choose either of these)
     // drivebase->follow(avoidTower_txt, 15, DEFAULT_TIMEOUT, false);
     drivebase->turnThenMoveToPoint(0, -47);
-
     drivebase->turnThenMoveToPoint(23.5, -23.5, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     
     clamp->clamp();
+    pros::delay(300);
+    elevator->forward();
 
     // go get rings in sequence
     drivebase->turnThenMoveToPoint(23.5, -47.5); // intake ring
     drivebase->turnThenMoveToPoint(47.5, -47.5); // intake ring
     drivebase->turnThenMoveToPoint(47.5, -23.5); // intake ring, go a little forward more
 
-    intake->forward();
     drivebase->turnThenMoveToPoint(60, -60, DEFAULT_TIMEOUT, {}, {}, false);
-    pros::delay(300);
-    intake->stop();
 
     drivebase->turnThenMoveToPoint(50, -50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     
@@ -207,7 +205,7 @@ void autonomousSkillsBlue()
     //go to the tower and climb
     // finished!
 
-    //Consider partner climbing in auton for points
+    // Consider partner climbing in auton for points
     drivebase->turnThenMoveToPoint(23.5, -28);
 
     clamp->clamp();
