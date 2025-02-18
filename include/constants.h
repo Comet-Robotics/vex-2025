@@ -108,8 +108,8 @@ namespace constants
     namespace intake
     {
         inline constexpr std::array<int8_t, 2> INTAKE_PORTS = {
-            -15, // left // TODO
-            4 // right // TODO
+            0,
+            0
         };
 
         inline const bool USE_TOGGLE = false;
@@ -120,9 +120,8 @@ namespace constants
 
     namespace elevator
     {
-        inline constexpr std::array<int8_t, 2> ELEVATOR_PORTS = {
-            2, // left
-            -16 // right // TODO
+        inline constexpr std::array<int8_t, 1> ELEVATOR_PORTS = {
+            2 // right // TODO
         };
 
         inline const bool USE_TOGGLE = false;
@@ -139,8 +138,8 @@ namespace constants
     namespace arm
     {
         inline constexpr std::array<int8_t, 2> ARM_PORTS = {
-            -10, // left // TODO
-            2 // right // TODO
+            0, // left // TODO
+            0 // right // TODO
         };
 
         inline const bool USE_TOGGLE = true;
