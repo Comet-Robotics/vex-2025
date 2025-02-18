@@ -31,8 +31,8 @@ namespace constants
             4
         };
 
-        inline constexpr double DRIVETRAIN_WIDTH = 11.25; //tune this
-        inline constexpr int8_t IMU_PORT = 5;
+        inline constexpr double DRIVETRAIN_WIDTH = 11.5; //tune this
+        inline constexpr int8_t IMU_PORT = 19;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
 
@@ -86,7 +86,7 @@ namespace constants
             2                           // horizontal drift is 2 (for now)
         );
 
-        inline pros::Rotation VERTICAL_ROTATION(-13);
+        inline pros::Rotation VERTICAL_ROTATION(-10);
     
         inline lemlib::TrackingWheel VERTICAL_TRACKING (
             &VERTICAL_ROTATION, // rotation sensor
@@ -162,7 +162,6 @@ namespace constants
         // inline const bool USE_TOGGLE = true;
 
         inline constexpr int WALLSTAKE_VOLTAGE = 12000; // mV
-        // uses basic motors, which doesn't requre gearset to be configured in code
     }
 }
 #endif

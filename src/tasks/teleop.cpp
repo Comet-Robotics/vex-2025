@@ -105,6 +105,7 @@ static void clamp_controls(Controller &controller) {
  */
 void opcontrol() {
     Controller controller(pros::E_CONTROLLER_MASTER);
+    drivebase->setPose(0, 0, 0);
 
     while (true) {
         pros::lcd::print(0, "Battery: %2.3f V", pros::battery::get_voltage() / 1000.0f);
@@ -115,7 +116,15 @@ void opcontrol() {
         clamp_controls(controller);
         arm_controls(controller);
 
-        pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
+        // pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
+        controller.clear();
+        pros::delay(50);
+        controller.print(0, 0, "X: %f", drivebase->getPose().x);
+        pros::delay(50);
+        controller.print(1, 0, "Y: %f", drivebase->getPose().y);
+        pros::delay(50);
+        controller.print(2, 0, "Theta: %f", drivebase->getPose().theta);
+        pros::delay(50);
 
         pros::delay(constants::TELEOP_POLL_TIME);
     }

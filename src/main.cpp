@@ -22,5 +22,5 @@ void initialize()
 
 void disabled() {}
 void competition_initialize() {
-	drivebase->calibrateChassis(true);
+	// drivebase->calibrateChassis(true);
 }

@@ -22,11 +22,11 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::SKILLS;
+inline constexpr AutonMode MODE = AutonMode::TEST;
 
 void autonomousTest()
 {
-    drivebase->calibrateChassis(true);
+    // drivebase->calibrateChassis(true);
 
     // set position to x:0, y:0, heading:0
     drivebase->setPose(0, 0, 0);
@@ -243,5 +243,5 @@ void autonomous()
 
 void autonomous_initialize()
 {
-    drivebase->calibrateChassis(true);
+    // drivebase->calibrateChassis(true);
 };
