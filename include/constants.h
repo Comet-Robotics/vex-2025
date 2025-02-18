@@ -17,18 +17,18 @@ namespace constants
         inline constexpr bool USE_TANK = false;
         // front, back, top front, top back
         inline constexpr std::array<int8_t, 4> LEFT_PORTS = {
+            20,
             8,
-            14,
-            -7,
-            -9
+            -9,
+            -7
         };
 
         // front, back, top front, top back
         inline constexpr std::array<int8_t, 4> RIGHT_PORTS = {
-            -18,
-            -20,
-            17,
-            19
+            -6,
+            -3,
+            5,
+            4
         };
 
         inline constexpr double DRIVETRAIN_WIDTH = 11.25; //tune this
@@ -108,8 +108,8 @@ namespace constants
     namespace intake
     {
         inline constexpr std::array<int8_t, 2> INTAKE_PORTS = {
-            -15, // left
-            4 // right
+            -15, // left // TODO
+            4 // right // TODO
         };
 
         inline const bool USE_TOGGLE = false;
@@ -121,8 +121,8 @@ namespace constants
     namespace elevator
     {
         inline constexpr std::array<int8_t, 2> ELEVATOR_PORTS = {
-            6, // left
-            -16 // right
+            2, // left
+            -16 // right // TODO
         };
 
         inline const bool USE_TOGGLE = false;
@@ -139,8 +139,8 @@ namespace constants
     namespace arm
     {
         inline constexpr std::array<int8_t, 2> ARM_PORTS = {
-            -10, // left
-            2 // right
+            -10, // left // TODO
+            2 // right // TODO
         };
 
         inline const bool USE_TOGGLE = true;
@@ -155,7 +155,7 @@ namespace constants
     namespace wallstake
     {
         inline constexpr std::array<int8_t, 2> WALLSTAKE_PORTS = {
-            //TODO change these to be correct
+            // TODO change these to be correct
             0, // left
             0 // right
         };
