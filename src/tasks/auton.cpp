@@ -51,103 +51,48 @@ ASSET(avoidTowerRed_txt)
 // port whichever over to the other bot later whenever we code that
 void autonomousSkillsRed()
 {
-    
-    drivebase->setPose(-64, 47, 90);
+    drivebase->setPose(-64, 32, -90);
 
-    // Move to the first ring
-    intake->forward();
-    drivebase->turnThenMoveToPoint(-47, 47, DEFAULT_TIMEOUT);
+    // -- RED SECTION --
 
-    // Go get the mobile goal
-    drivebase->turnThenMoveToPoint(-29, 47, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    // drive to first mobile goal and grab it
+    drivebase->turnThenMoveToPoint(-48, 32, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    drivebase->turnThenMoveToPoint(-24, 48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     clamp->clamp();
-    pros::delay(200);
-    elevator->forward(); // score ring from field
-    
+    pros::delay(100);
+    intake->forward();
+    elevator->forward();
 
-    // Go get the next rings in sequence
-    drivebase->turnThenMoveToPoint(-24, 24);
-    drivebase->turnThenMoveToPoint(0, 47);
-    drivebase->turnThenMoveToPoint(0, 59);
+    // Go get the 1 ring on diagonal and 4 rings in the middle
+    drivebase->turnThenMoveToPoint(-24, -24);
+    drivebase->turnThenMoveToPoint(-3, -3);
+    drivebase->turnThenMoveToPoint(6, 3);
+    drivebase->turnThenMoveToPoint(3, -6);
+    drivebase->turnThenMoveToPoint(-6, -6);
+
+    // Go to corner
+    drivebase->turnThenMoveToPoint(-12, 12);
+    drivebase->turnThenMoveToPoint(-64, 64, DEFAULT_TIMEOUT, {}, {}, false);
+    elevator->stop();
     
-    // Get the ring in the corner
-    drivebase->turnThenMoveToPoint(-62, 62);
-    
-    // Back up
+    // Back up then turn around and deposit the mobile goal
     drivebase->turnThenMoveToPoint(-50, 50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
-
-    // turn around and deposit the mobile goal
     drivebase->turnThenMoveToPoint(-60, 60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     clamp->unclamp();
-    intake->stop();
-    elevator->stop();
 
-    // ---- SECOND HALF/ORANGE CIRCLE ---- //
 
-    // Move out of the corner 
-    drivebase->turnThenMoveToPoint(-50, 50);
-    
-    //avoid the middle while going to the next mobile goal (choose between these)
-    // drivebase->follow(avoidTowerRed_txt, 15, DEFAULT_TIMEOUT, false); 
-    drivebase->turnThenMoveToPoint(0, 47);
-    drivebase->turnThenMoveToPoint(24, 24,  DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    
-    // Clamp mobile goal
+    // -- ORANGE SECTION --
+
+    // Go to and grab mobile goal
+    drivebase->turnThenMoveToPoint(0, 0);
+    drivebase->turnThenMoveToPoint(24, 24, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     clamp->clamp();
-    pros::delay(200);
-    intake->forward();
-    elevator->forward();
+    pros::delay(100);
 
-    // Go get the 4 rings in the middle
-    drivebase->turnThenMoveToPoint(3, 3);
-    drivebase->turnThenMoveToPoint(-6, 3);
-    drivebase->turnThenMoveToPoint(-3, -6);
-    drivebase->turnThenMoveToPoint(6, -6); // might be able to just be turn to point
-
-    // Get the other two rings
-    drivebase->turnThenMoveToPoint(24, 48);
-    drivebase->turnThenMoveToPoint(48, 48);
-
-    // fucked shit to knock the stupid ass blue ring away from corner + half intake the red bcs no room on mobile goal
-    // (force mech team to put a fucking bar on a piston and it works probably)
-
-    // Intake the corner red ring DONT PUT ON MOGO
-    drivebase->turnThenMoveToPoint(60, 60, DEFAULT_TIMEOUT, {}, {}, false);
-    pros::delay(300);
-    intake->stop();
-    elevator->stop();
-
-    // move backwards, turn around, and then deposit the mobile goal
-    drivebase->turnThenMoveToPoint(50, 50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
-    drivebase->turnThenMoveToPoint(60, 60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    clamp->unclamp();
-    
-    // grab final mobile goal and place all remaining red rings except one onto it
-    // place final red ring on blue alliance wall stake
-    
-    // Grab final mobile goal
-    drivebase->turnThenMoveToPoint(24, 24);
-    drivebase->turnThenMoveToPoint(44, 4, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    clamp->clamp();
-    elevator->forward();
-    intake->forward();
-
-    // Go get the ring we passed, place it and the held ring onto the mobile goal
-    // TODO: After testing that everything works, go further to also get blue ring
-    drivebase->turnThenMoveToPoint(48, 27, false);
-    // maybe go a little further to get blue ring (pushed off) after red ring
-
-
-    // Go get the remaining ring (dropping the mobile goal on the way) and score it onto the wall stake
-    drivebase->turnThenMoveToPoint(60, 0);
-    pros::delay(500);
-    clamp->unclamp();
-    drivebase->turnThenMoveToPoint(66.5, 0, DEFAULT_TIMEOUT, {}, {}, false);
-    intake->stop();
-    drivebase->waitUntilStationary();
-    //score wallstake
+    // Get rings
+    drivebase->turnThenMoveToPoint(0, 48);
+    drivebase->turnThenMoveToPoint(0, 56);
 }
-
 ASSET(avoidTower_txt)
 void autonomousSkillsBlue()
 {
