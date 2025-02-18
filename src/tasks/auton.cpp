@@ -26,8 +26,6 @@ inline constexpr AutonMode MODE = AutonMode::SKILLS;
 
 void autonomousTest()
 {
-    drivebase->calibrateChassis(true);
-
     // set position to x:0, y:0, heading:0
     drivebase->setPose(0, 0, 0);
 
@@ -39,7 +37,7 @@ void autonomousTest()
 
     pros::delay(3000);
 
-    drivebase->moveToPoint(0, -48, 5000, {.forwards = false}, true);
+    drivebase->moveToPoint(0, 48, 5000);
 
     lcd::print(0, "X: %f", drivebase->getPose().x);
     lcd::print(1, "Y: %f", drivebase->getPose().y);
@@ -53,13 +51,14 @@ void autonomousSkillsRed()
 {
     
     drivebase->setPose(-64, 47, 90);
+    clamp->unclamp();
 
     // Move to the first ring
     intake->forward();
     drivebase->turnThenMoveToPoint(-47, 47, DEFAULT_TIMEOUT);
 
     // Go get the mobile goal
-    drivebase->turnThenMoveToPoint(-29, 47, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    drivebase->turnThenMoveToPoint(-20, 47, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false, .maxSpeed = 63}, false);
     clamp->clamp();
     pros::delay(200);
     elevator->forward(); // score ring from field
@@ -134,7 +133,8 @@ void autonomousSkillsRed()
 
     // Go get the ring we passed, place it and the held ring onto the mobile goal
     // TODO: After testing that everything works, go further to also get blue ring
-    drivebase->turnThenMoveToPoint(48, 27, false);
+    drivebase->turnThenMoveToPoint(48, 24);
+    drivebase->turnThenMoveToPoint(48, 27);
     // maybe go a little further to get blue ring (pushed off) after red ring
 
 
@@ -142,8 +142,8 @@ void autonomousSkillsRed()
     drivebase->turnThenMoveToPoint(60, 0);
     pros::delay(500);
     clamp->unclamp();
-    drivebase->turnThenMoveToPoint(66.5, 0, DEFAULT_TIMEOUT, {}, {}, false);
-    intake->stop();
+    drivebase->turnThenMoveToPoint(66.5, 0, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    elevator->stop();
     drivebase->waitUntilStationary();
     //score wallstake
 }
@@ -243,5 +243,5 @@ void autonomous()
 
 void autonomous_initialize()
 {
-    drivebase->calibrateChassis(true);
+    // drivebase->calibrateChassis(true);
 };

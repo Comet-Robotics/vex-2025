@@ -31,22 +31,23 @@ namespace constants
             19
         };
 
-        inline constexpr double DRIVETRAIN_WIDTH = 11.25; //tune this
+        inline constexpr double DRIVETRAIN_WIDTH = 10; //tune this
         inline constexpr int8_t IMU_PORT = 5;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
 
         // lateral PID controller
         inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
-            9,   // proportional gain (kP)
+            5,   // proportional gain (kP)
             0,   // integral gain (kI)
-            70,   // derivative gain (kD)
+            40,   // derivative gain (kD)
             0,   // anti windup
             1,   // small error range, in inches
             100, // small error range timeout, in milliseconds
             3,   // large error range, in inches
             500, // large error range timeout, in milliseconds
             0   // maximum acceleration (slew)
+
         );
 
         // angular PID controller
@@ -59,7 +60,7 @@ namespace constants
             100, // small error range timeout, in milliseconds
             3, // large error range, in degrees
             500, // large error range timeout, in milliseconds
-            0// maximum acceleration (slew)
+            0 // maximum acceleration (slew)
         );
 
         inline pros::MotorGroup LEFT_MOTORS({LEFT_PORTS[0],
@@ -82,7 +83,7 @@ namespace constants
             &RIGHT_MOTORS,              // right motor group
             DRIVETRAIN_WIDTH,           // 10 inch track width
             lemlib::Omniwheel::NEW_325, // using new 3.25" omnis
-            360,                        // drivetrain rpm is 360
+            600,                        // drivetrain rpm is 360
             2                           // horizontal drift is 2 (for now)
         );
 
@@ -91,11 +92,11 @@ namespace constants
         inline lemlib::TrackingWheel VERTICAL_TRACKING (
             &VERTICAL_ROTATION, // rotation sensor
             lemlib::Omniwheel::NEW_2, // wheel diameter
-            0 // distance from center of rotation
+            -0.2 // distance from center of rotation
         );
 
         inline lemlib::OdomSensors SENSORS(
-            &VERTICAL_TRACKING, // vertical tracking wheel 1
+            nullptr,//&VERTICAL_TRACKING, // vertical tracking wheel 1
             nullptr,
             nullptr, // horizontal tracking wheel 1
             nullptr,
@@ -127,7 +128,7 @@ namespace constants
 
         inline const bool USE_TOGGLE = false;
 
-        inline constexpr int ELEVATOR_VOLTAGE = 8000; // mV
+        inline constexpr int ELEVATOR_VOLTAGE = 12000; // mV
         // uses basic motors, which doesn't requre gearset to be configured in code
     }
 
