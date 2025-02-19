@@ -31,35 +31,34 @@ namespace constants
             19
         };
 
-        inline constexpr double DRIVETRAIN_WIDTH = 10; //tune this
+        inline constexpr double DRIVETRAIN_WIDTH = 7.5; //tune this
         inline constexpr int8_t IMU_PORT = 5;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
 
         // lateral PID controller
         inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
-            5,   // proportional gain (kP)
-            0,   // integral gain (kI)
-            40,   // derivative gain (kD)
-            0,   // anti windup
-            1,   // small error range, in inches
+            6,   // proportional gain (kP)
+            0.95,   // integral gain (kI)
+            45,   // derivative gain (kD)
+            1.1,   // anti windup
+            0.5,   // small error range, in inches
             100, // small error range timeout, in milliseconds
-            3,   // large error range, in inches
-            500, // large error range timeout, in milliseconds
-            0   // maximum acceleration (slew)
-
+            2,   // large error range, in inches
+            1000, // large error range timeout, in milliseconds
+            5   // maximum acceleration (slew)
         );
 
         // angular PID controller
         inline const lemlib::ControllerSettings ANGULAR_CONTROLLER(
-            7, // proportional gain (kP)
-            0,// integral gain (kI)
-            55,// derivative gain (kD)
-            0, // anti windup
-            1, // small error range, in degrees
-            100, // small error range timeout, in milliseconds
-            3, // large error range, in degrees
-            500, // large error range timeout, in milliseconds
+            4, // proportional gain (kP)
+            0.8,// integral gain (kI)
+            45,// derivative gain (kD)
+            4, // anti windup
+            0, // small error range, in degrees
+            0, // small error range timeout, in milliseconds
+            0, // large error range, in degrees
+            0, // large error range timeout, in milliseconds
             0 // maximum acceleration (slew)
         );
 
@@ -91,17 +90,19 @@ namespace constants
     
         inline lemlib::TrackingWheel VERTICAL_TRACKING (
             &VERTICAL_ROTATION, // rotation sensor
-            lemlib::Omniwheel::NEW_2, // wheel diameter
+            lemlib::Omniwheel::NEW_2 * (45.5 / 48), // wheel diameter
             -0.2 // distance from center of rotation
         );
 
         inline lemlib::OdomSensors SENSORS(
-            nullptr,//&VERTICAL_TRACKING, // vertical tracking wheel 1
+            &VERTICAL_TRACKING, // vertical tracking wheel 1
             nullptr,
             nullptr, // horizontal tracking wheel 1
             nullptr,
             &IMU     // inertial sensor
         );
+
+        inline constexpr pros::motor_brake_mode_e BRAKE_MODE = pros::E_MOTOR_BRAKE_BRAKE;
 
         inline constexpr int DEFAULT_TIMEOUT = 5000;
     }
@@ -145,7 +146,6 @@ namespace constants
         };
 
         inline const bool USE_TOGGLE = true;
-        inline const pros::motor_brake_mode_e BRAKE_MODE = pros::E_MOTOR_BRAKE_BRAKE;
 
         inline constexpr int ARM_VOLTAGE = 12000; // mV
     }

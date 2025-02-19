@@ -1,6 +1,7 @@
 #ifndef __SUBSYSTEMS_H__
 #define __SUBSYSTEMS_H__
 
+#include "constants.h"
 #include "subsystems/drivebase.h"
 #include "subsystems/intake.h"
 #include "subsystems/clamp.h"
@@ -21,7 +22,9 @@ inline void subsystems_initialize()
     elevator = new Elevator();
     clamp = new Clamp();
     arm = new Arm();
+
     drivebase->calibrateChassis(true);
+    drivebase->setBrakeMode(constants::drivebase::BRAKE_MODE);
 }
 
 #endif

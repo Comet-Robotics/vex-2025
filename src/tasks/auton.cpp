@@ -1,3 +1,4 @@
+#include "liblvgl/llemu.hpp"
 #include "pros/misc.h"
 #include "pros/misc.hpp"
 #include "pros/llemu.hpp"
@@ -22,7 +23,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::SKILLS;
+inline constexpr AutonMode MODE = AutonMode::TEST;
 
 void autonomousTest()
 {
@@ -37,8 +38,9 @@ void autonomousTest()
 
     pros::delay(3000);
 
-    drivebase->moveToPoint(0, 48, 5000);
+    drivebase->moveToPoint(0, -48, 5000, {.forwards = false});
 
+    pros::delay(3000);
     lcd::print(0, "X: %f", drivebase->getPose().x);
     lcd::print(1, "Y: %f", drivebase->getPose().y);
     lcd::print(2, "Theta: %f", drivebase->getPose().theta);
