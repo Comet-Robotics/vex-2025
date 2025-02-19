@@ -151,20 +151,5 @@ namespace constants
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms
-
-    
-    namespace wallstake
-    {
-        inline constexpr std::array<int8_t, 2> WALLSTAKE_PORTS = {
-            //TODO change these to be correct
-            0, // left
-            0 // right
-        };
-
-        // inline const bool USE_TOGGLE = true;
-
-        inline constexpr int WALLSTAKE_VOLTAGE = 12000; // mV
-        // uses basic motors, which doesn't requre gearset to be configured in code
-    }
 }
 #endif
