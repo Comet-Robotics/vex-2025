@@ -106,11 +106,8 @@ void trackWidthTuner() {
     while (pros::millis() - startTime < 3000) {
         drivebase->arcade(0, 63);
         pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
-        controller.clear();
-        pros::delay(50);
-        controller.print(0, 0, "TW: %.2f", DRIVETRAIN_WIDTH);
-        pros::delay(50);
-        controller.print(1, 0, "TopDist: %.3f", highestDist);
+        pros::lcd::print(2, "TW: %.2f", DRIVETRAIN_WIDTH);
+        pros::lcd::print(3, "TopDist: %.3f", highestDist);
 
         float currentDist = sqrt(pow(drivebase->getPose().x, 2) + pow(drivebase->getPose().y, 2));
         if (currentDist > highestDist) {
@@ -128,13 +125,8 @@ void trackWidthTuner() {
 
     while (true) {
         pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
-        controller.clear();
-        pros::delay(50);
-        controller.print(0, 0, "X: %.2f", drivebase->getPose().x);
-        pros::delay(50);
-        controller.print(1, 0, "Y: %.2f", drivebase->getPose().y);
-        pros::delay(50);
-        controller.print(2, 0, "TopDist: %.3f", highestDist);
+        pros::lcd::print(2, "TW: %.2f", DRIVETRAIN_WIDTH);
+        pros::lcd::print(3, "TopDist: %.3f", highestDist);
 
         pros::delay(constants::TELEOP_POLL_TIME);
     }
@@ -155,7 +147,7 @@ void driverControl() {
 
         pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
 
-        pros::lcd::print(2, "Y: %f", drivebase->getPose().y);
+        pros::lcd::print(2, "Theta: %f", drivebase->getPose().theta);
 
         pros::delay(constants::TELEOP_POLL_TIME);
     }

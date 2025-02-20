@@ -23,7 +23,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::TEST;
+inline constexpr AutonMode MODE = AutonMode::SKILLS;
 
 void autonomousTest()
 {
@@ -52,27 +52,29 @@ ASSET(avoidTowerRed_txt)
 void autonomousSkillsRed()
 {
     
-    drivebase->setPose(-64, 47, 90);
+    drivebase->setPose(-58.5, 48, 90);
     clamp->unclamp();
 
     // Move to the first ring
     intake->forward();
-    drivebase->turnThenMoveToPoint(-47, 47, DEFAULT_TIMEOUT);
+    drivebase->turnThenMoveToPoint(-48, 48, DEFAULT_TIMEOUT);
 
     // Go get the mobile goal
-    drivebase->turnThenMoveToPoint(-20, 47, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false, .maxSpeed = 63}, false);
+    drivebase->turnThenMoveToPoint(-20, 48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false, .maxSpeed = 63}, false);
     clamp->clamp();
     pros::delay(200);
     elevator->forward(); // score ring from field
-    
 
     // Go get the next rings in sequence
     drivebase->turnThenMoveToPoint(-24, 24);
     drivebase->turnThenMoveToPoint(0, 47);
     drivebase->turnThenMoveToPoint(0, 59);
+
+    // why does this work
+    // drivebase->setPose(drivebase->getPose().x + 6, drivebase->getPose().y, drivebase->getPose().theta);
     
     // Get the ring in the corner
-    drivebase->turnThenMoveToPoint(-62, 62);
+    drivebase->turnThenMoveToPoint(-59, 59, false);
     
     // Back up
     drivebase->turnThenMoveToPoint(-50, 50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
@@ -86,12 +88,17 @@ void autonomousSkillsRed()
     // ---- SECOND HALF/ORANGE CIRCLE ---- //
 
     // Move out of the corner 
-    drivebase->turnThenMoveToPoint(-50, 50);
+    drivebase->turnThenMoveToPoint(-48, 48);
     
     //avoid the middle while going to the next mobile goal (choose between these)
     // drivebase->follow(avoidTowerRed_txt, 15, DEFAULT_TIMEOUT, false); 
-    drivebase->turnThenMoveToPoint(0, 47);
-    drivebase->turnThenMoveToPoint(24, 24,  DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    drivebase->turnThenMoveToPoint(-16, 48);
+    drivebase->turnToPoint(-16, 63, DEFAULT_TIMEOUT, {.forwards = false}, false);
+    drivebase->arcade(-63, 0);
+    pros::delay(1500);
+    drivebase->setHeading(180);
+    drivebase->moveToPoint(-16, 60, DEFAULT_TIMEOUT, {.forwards = false});
+    drivebase->turnThenMoveToPoint(26, 22,  DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false, .maxSpeed = 40}, false);
     
     // Clamp mobile goal
     clamp->clamp();
@@ -130,6 +137,7 @@ void autonomousSkillsRed()
     drivebase->turnThenMoveToPoint(24, 24);
     drivebase->turnThenMoveToPoint(44, 4, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     clamp->clamp();
+    pros::delay(200);
     elevator->forward();
     intake->forward();
 

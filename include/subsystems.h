@@ -24,7 +24,7 @@ inline void subsystems_initialize()
     arm = new Arm();
 
     drivebase->calibrateChassis(true);
-    drivebase->setBrakeMode(constants::drivebase::BRAKE_MODE);
+    // drivebase->setBrakeMode(constants::drivebase::BRAKE_MODE);
 }
 
 #endif

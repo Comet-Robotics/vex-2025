@@ -55,10 +55,10 @@ namespace constants
             0.8,// integral gain (kI)
             45,// derivative gain (kD)
             4, // anti windup
-            0, // small error range, in degrees
-            0, // small error range timeout, in milliseconds
-            0, // large error range, in degrees
-            0, // large error range timeout, in milliseconds
+            0.5, // small error range, in degrees
+            100, // small error range timeout, in milliseconds
+            1, // large error range, in degrees
+            500, // large error range timeout, in milliseconds
             0 // maximum acceleration (slew)
         );
 
@@ -82,7 +82,7 @@ namespace constants
             &RIGHT_MOTORS,              // right motor group
             DRIVETRAIN_WIDTH,           // 10 inch track width
             lemlib::Omniwheel::NEW_325, // using new 3.25" omnis
-            600,                        // drivetrain rpm is 360
+            360,                        // drivetrain rpm is 360
             2                           // horizontal drift is 2 (for now)
         );
 
@@ -105,6 +105,7 @@ namespace constants
         inline constexpr pros::motor_brake_mode_e BRAKE_MODE = pros::E_MOTOR_BRAKE_BRAKE;
 
         inline constexpr int DEFAULT_TIMEOUT = 5000;
+        inline constexpr float DECELERATION_LIMIT = 0.05;
     }
 
     namespace intake
@@ -117,7 +118,7 @@ namespace constants
         inline const bool USE_TOGGLE = false;
 
         inline constexpr int INTAKE_VOLTAGE = 12000; // mV
-        // uses basic motors, which doesn't requre gearset to be configured in code
+        
     }
 
     namespace elevator
