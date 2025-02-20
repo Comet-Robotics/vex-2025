@@ -194,17 +194,17 @@ void autonomousVS()
     drivebase->turnThenMoveToPoint(-28, 58);
     
     // drive to blue/red goal stack and grab red ring
-    drivebase->turnThenMoveToPoint(-48, -48);
+    drivebase->turnThenMoveToPoint(-48, 48);
 
     // corner intaking!
     // enter corner with intake reversed, then once in corner, put intake forward
-    drivebase->turnThenMoveToPoint(-64, -64);
+    drivebase->turnThenMoveToPoint(-64, 64);
     intake->reverse();
     drivebase->waitUntilStationary();
     intake->forward();
     pros::delay(4000); // TODO: tune
 
-    drivebase->turnThenMoveToPoint(-60, -60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    drivebase->turnThenMoveToPoint(-60, 60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
     intake->stop();
     elevator->stop();
     drivebase->turnThenMoveToPoint(-36, -36, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
