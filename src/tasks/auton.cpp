@@ -116,7 +116,49 @@ void autonomousSkills()
 }
 
 
-void autonomousVS(){}
+void autonomousVS(){
+    drivebase->setPose(-60, -12, 0);
+    clamp->unclamp();
+
+    // grab first ring and put on alliance wall stake
+    intake->forward();
+    drivebase->moveToPoint(-60, 0, DEFAULT_TIMEOUT);
+    drivebase->turnThenMoveToPoint(-66, 0);
+    elevator->forward();
+    pros::delay(1000);
+
+    // grab mobile goal
+    drivebase->moveToPoint(-60, 0, DEFAULT_TIMEOUT);
+    drivebase->turnThenMoveToPoint(-48, 0, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    clamp->clamp();
+    
+    // grab ring from blue/red stack
+    drivebase->turnThenMoveToPoint(-48, -48);
+    intake->stop();
+    drivebase->turnThenMoveToPoint(-48, -58);
+    drivebase->turnThenMoveToPoint(-48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    intake->forward();
+    drivebase->turnThenMoveToPoint(-24, -48);
+    pros::delay(500);
+    elevator->stop();
+
+    // grab ring from red/blue stack (make sure to spit out bottom blue ring)
+    drivebase->turnToHeading(-45, DEFAULT_TIMEOUT, {}, false);
+    intake->reverse();
+    pros::delay(500);
+    intake->forward();
+    elevator->forward();
+    drivebase->turnThenMoveToPoint(-18, -48);
+
+    drivebase->turnThenMoveToPoint(-48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+
+    // corner intake
+    drivebase->turnThenMoveToPoint(-64, -64);
+    intake->reverse();
+    drivebase->waitUntilStationary();
+    intake->forward();
+    pros::delay(4000); // TODO: tune
+}
 
 void autonomous()
 {
