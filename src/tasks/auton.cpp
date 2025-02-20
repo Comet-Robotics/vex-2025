@@ -156,73 +156,10 @@ void autonomousSkillsRed()
     elevator->stop();
     drivebase->waitUntilStationary();
     //score wallstake
-}
-
-ASSET(avoidTower_txt)
-void autonomousSkillsBlue()
-{
-    drivebase->setPose(-64, 0, 90);
-    
-    intake->forward();
-    drivebase->moveToPoint(-48, 0, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(-65, 0, DEFAULT_TIMEOUT, {.forwards = false}, false); // consider making async and adding small delay if needed
     elevator->forward();
-    pros::delay(1000);
-
-    drivebase->moveToPoint(-60, 0, DEFAULT_TIMEOUT);
-    drivebase->turnThenMoveToPoint(-24, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    clamp->clamp();
-    intake->forward();
-    pros::delay(300);
-
-    drivebase->turnThenMoveToPoint(0, -47);
-
-    drivebase->turnThenMoveToPoint(0, -60);
-    drivebase->turnThenMoveToPoint(-24, -24);
-    drivebase->turnThenMoveToPoint(-60, -60); // Make sure it actually intakes/goes without hitting wall
-    drivebase->moveToPoint(-50, -50, DEFAULT_TIMEOUT, {.forwards=false}); // Tune exact value later
-    drivebase->turnThenMoveToPoint(-60, -60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    clamp->unclamp();
-
+    pros::delay(2000);
+    intake->stop();
     elevator->stop();
-
-    // purple section
-    
-    // go get far mobile goal
-    drivebase->moveToPoint(-50, -50, DEFAULT_TIMEOUT); // back up from corner
-    
-    // avoid tower (choose either of these)
-    // drivebase->follow(avoidTower_txt, 15, DEFAULT_TIMEOUT, false);
-    drivebase->turnThenMoveToPoint(0, -47);
-    drivebase->turnThenMoveToPoint(23.5, -23.5, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    
-    clamp->clamp();
-    pros::delay(300);
-    elevator->forward();
-
-    // go get rings in sequence
-    drivebase->turnThenMoveToPoint(23.5, -47.5); // intake ring
-    drivebase->turnThenMoveToPoint(47.5, -47.5); // intake ring
-    drivebase->turnThenMoveToPoint(47.5, -23.5); // intake ring, go a little forward more
-
-    drivebase->turnThenMoveToPoint(60, -60, DEFAULT_TIMEOUT, {}, {}, false);
-
-    drivebase->turnThenMoveToPoint(50, -50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    
-    // move to corner backwards and drop goal
-    drivebase->turnThenMoveToPoint(60, -60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false); // put goal in corner
-    clamp->unclamp();
-    //go to the tower and climb
-    // finished!
-
-    // Consider partner climbing in auton for points
-    drivebase->turnThenMoveToPoint(23.5, -28);
-
-    clamp->clamp();
-
-    
-    drivebase->turnThenMoveToPoint(66.5, -66.5);
-    
 }
 
 void autonomousSkills()
@@ -234,6 +171,7 @@ void autonomousSkills()
 
 void autonomousVS()
 {
+
 }
 
 void autonomous()
