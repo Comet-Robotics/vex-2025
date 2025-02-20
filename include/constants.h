@@ -108,8 +108,8 @@ namespace constants
     namespace intake
     {
         inline constexpr std::array<int8_t, 2> INTAKE_PORTS = {
-            0,
-            0
+            0, // left, negative
+            11 // right, positive
         };
 
         inline const bool USE_TOGGLE = false;
@@ -138,7 +138,7 @@ namespace constants
     namespace arm
     {
         inline constexpr std::array<int8_t, 2> ARM_PORTS = {
-            0, // left // TODO
+            -15, // left negative
             0 // right // TODO
         };
 
@@ -149,19 +149,5 @@ namespace constants
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms
-
-    
-    namespace wallstake
-    {
-        inline constexpr std::array<int8_t, 2> WALLSTAKE_PORTS = {
-            // TODO change these to be correct
-            0, // left
-            0 // right
-        };
-
-        // inline const bool USE_TOGGLE = true;
-
-        inline constexpr int WALLSTAKE_VOLTAGE = 12000; // mV
-    }
 }
 #endif
