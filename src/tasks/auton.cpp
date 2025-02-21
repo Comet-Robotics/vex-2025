@@ -124,7 +124,7 @@ void autonomousVS(){
     // grab first ring and put on alliance wall stake
     intake->forward();
     drivebase->moveToPoint(-60, 0, DEFAULT_TIMEOUT);
-    drivebase->turnThenMoveToPoint(-66, 0);
+    drivebase->turnThenMoveToPoint(-66, 0, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
     elevator->forward();
     pros::delay(1000);
 
