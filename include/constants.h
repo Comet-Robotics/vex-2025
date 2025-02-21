@@ -38,28 +38,28 @@ namespace constants
 
         // lateral PID controller
         inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
-            9,   // proportional gain (kP)
+            5,   // proportional gain (kP)
             0,   // integral gain (kI)
-            70,   // derivative gain (kD)
-            0,   // anti windup
-            1,   // small error range, in inches
-            100, // small error range timeout, in milliseconds
-            3,   // large error range, in inches
-            500, // large error range timeout, in milliseconds
+            65,   // derivative gain (kD)
+            1.1,   // anti windup
+            0,   // small error range, in inches
+            0, // small error range timeout, in milliseconds
+            0,   // large error range, in inches
+            0, // large error range timeout, in milliseconds
             0   // maximum acceleration (slew)
         );
 
         // angular PID controller
         inline const lemlib::ControllerSettings ANGULAR_CONTROLLER(
-            7, // proportional gain (kP)
-            0,// integral gain (kI)
-            55,// derivative gain (kD)
-            0, // anti windup
-            1, // small error range, in degrees
-            100, // small error range timeout, in milliseconds
-            3, // large error range, in degrees
-            500, // large error range timeout, in milliseconds
-            0// maximum acceleration (slew)
+            4, // proportional gain (kP)
+            0.8,// integral gain (kI)
+            45,// derivative gain (kD)
+            3, // anti windup
+            0.2, // small error range, in degrees
+            300, // small error range timeout, in milliseconds
+            0.5, // large error range, in degrees
+            1000, // large error range timeout, in milliseconds
+            0 // maximum acceleration (slew)
         );
 
         inline pros::MotorGroup LEFT_MOTORS({LEFT_PORTS[0],

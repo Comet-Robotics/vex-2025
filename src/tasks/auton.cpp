@@ -38,8 +38,9 @@ void autonomousTest()
     lcd::print(3, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
 
     
-    drivebase->moveToPoint(0, -48, DEFAULT_TIMEOUT);
-    
+    drivebase->moveToPoint(0, 48, DEFAULT_TIMEOUT, {}, false);
+    // drivebase->turnToHeading(270, DEFAULT_TIMEOUT, {}, false);
+
     pros::delay(500);
 
     lcd::print(0, "X: %f", drivebase->getPose().x);
