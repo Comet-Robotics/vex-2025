@@ -23,7 +23,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::SKILLS;
+inline constexpr AutonMode MODE = AutonMode::VS;
 
 void autonomousTest()
 {
@@ -171,12 +171,12 @@ void autonomousSkills()
 
 void autonomousVS()
 {
-    drivebase->setPose(-60, 12, 0);
+    drivebase->setPose(-56, 12, -90);
     clamp->unclamp();
 
     // drive to middle mobile goal and clamp
-    drivebase->moveToPoint(-24, 12, DEFAULT_TIMEOUT, {.forwards = false});
-    drivebase->turnThenMoveToPoint(-6, 3, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    drivebase->moveToPoint(-20.78, 12, DEFAULT_TIMEOUT, {.forwards = false});
+    drivebase->turnThenMoveToPoint(-5.19, 3, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false, .maxSpeed = 41}, false);
     clamp->clamp();
     pros::delay(200);
 
@@ -202,7 +202,7 @@ void autonomousVS()
     intake->reverse();
     drivebase->waitUntilStationary();
     intake->forward();
-    pros::delay(4000); // TODO: tune
+    pros::delay(2000); // TODO: tune
 
     drivebase->turnThenMoveToPoint(-60, 60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
     intake->stop();
