@@ -22,7 +22,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::TEST;
+inline constexpr AutonMode MODE = AutonMode::VS;
 
 void autonomousTest()
 {
@@ -118,20 +118,20 @@ void autonomousSkills()
 
 
 void autonomousVS(){
-    drivebase->setPose(-60, -12, 0);
+    drivebase->setPose(-55.5, -31.5, 180);
     clamp->unclamp();
 
-    // grab first ring and put on alliance wall stake
-    intake->forward();
-    drivebase->moveToPoint(-60, 0, DEFAULT_TIMEOUT);
-    drivebase->turnThenMoveToPoint(-66, 0, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
-    elevator->forward();
-    pros::delay(1000);
 
     // grab mobile goal
-    drivebase->moveToPoint(-60, 0, DEFAULT_TIMEOUT);
-    drivebase->turnThenMoveToPoint(-48, 0, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    drivebase->moveToPoint(-48, -24, DEFAULT_TIMEOUT, {.forwards = false, .maxSpeed = 80});
+    drivebase->moveToPoint(-48, 0, DEFAULT_TIMEOUT, {.forwards = false, .maxSpeed = 80}, false);
     clamp->clamp();
+    pros::delay(200);
+
+    intake->forward();
+    drivebase->turnThenMoveToPoint(-58, 0, DEFAULT_TIMEOUT);
+    elevator->forward();
+
     
     // grab ring from blue/red stack
     drivebase->turnThenMoveToPoint(-48, -48);
@@ -145,11 +145,13 @@ void autonomousVS(){
 
     // grab ring from red/blue stack (make sure to spit out bottom blue ring)
     drivebase->turnToHeading(-45, DEFAULT_TIMEOUT, {}, false);
+    drivebase->moveToPoint(-36, -36, DEFAULT_TIMEOUT);
+    drivebase->moveToPoint(-24, -48, DEFAULT_TIMEOUT, {.forwards = false});
     intake->reverse();
     pros::delay(500);
     intake->forward();
     elevator->forward();
-    drivebase->turnThenMoveToPoint(-18, -48);
+    drivebase->turnThenMoveToPoint(-12, -48);
 
     drivebase->turnThenMoveToPoint(-48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
 

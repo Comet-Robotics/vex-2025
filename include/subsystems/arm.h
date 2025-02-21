@@ -16,9 +16,7 @@ enum class ArmState
 class Arm : public pros::MotorGroup
 {
 public:
-    Arm() : pros::MotorGroup({ARM_PORTS[0], ARM_PORTS[1]}) {
-        this->set_brake_mode(BRAKE_MODE);
-    }
+    Arm() : pros::MotorGroup({ARM_PORTS[0], ARM_PORTS[1]}) {}
 
     inline void forward() { this->move_voltage(ARM_VOLTAGE); }
 

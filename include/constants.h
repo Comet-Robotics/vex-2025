@@ -3,6 +3,7 @@
 
 #include "lemlib/chassis/trackingWheel.hpp"
 #include "pros/abstract_motor.hpp"
+#include "pros/motors.h"
 #include "pros/rotation.hpp"
 #include <array>
 #include <cstdint>
@@ -38,15 +39,15 @@ namespace constants
 
         // lateral PID controller
         inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
-            5,   // proportional gain (kP)
-            0,   // integral gain (kI)
-            65,   // derivative gain (kD)
+            6,   // proportional gain (kP)
+            0.95,   // integral gain (kI)
+            45,   // derivative gain (kD)
             1.1,   // anti windup
-            0,   // small error range, in inches
-            0, // small error range timeout, in milliseconds
-            0,   // large error range, in inches
-            0, // large error range timeout, in milliseconds
-            0   // maximum acceleration (slew)
+            0.5,   // small error range, in inches
+            100, // small error range timeout, in milliseconds
+            2,   // large error range, in inches
+            1000, // large error range timeout, in milliseconds
+            5   // maximum acceleration (slew)
         );
 
         // angular PID controller
@@ -54,11 +55,11 @@ namespace constants
             4, // proportional gain (kP)
             0.8,// integral gain (kI)
             45,// derivative gain (kD)
-            3, // anti windup
-            0.2, // small error range, in degrees
-            300, // small error range timeout, in milliseconds
-            0.5, // large error range, in degrees
-            1000, // large error range timeout, in milliseconds
+            4, // anti windup
+            0.5, // small error range, in degrees
+            100, // small error range timeout, in milliseconds
+            1, // large error range, in degrees
+            500, // large error range timeout, in milliseconds
             0 // maximum acceleration (slew)
         );
 
@@ -90,7 +91,7 @@ namespace constants
     
         inline lemlib::TrackingWheel VERTICAL_TRACKING (
             &VERTICAL_ROTATION, // rotation sensor
-            lemlib::Omniwheel::NEW_2, // wheel diameter
+            lemlib::Omniwheel::NEW_2 * (45.5 / 48), // wheel diameter
             0 // distance from center of rotation
         );
 
@@ -103,6 +104,8 @@ namespace constants
         );
 
         inline constexpr int DEFAULT_TIMEOUT = 5000;
+
+        inline constexpr pros::motor_brake_mode_e BRAKE_MODE = pros::E_MOTOR_BRAKE_BRAKE;
     }
 
     namespace intake
@@ -126,7 +129,7 @@ namespace constants
 
         inline const bool USE_TOGGLE = false;
 
-        inline constexpr int ELEVATOR_VOLTAGE = 8000; // mV
+        inline constexpr int ELEVATOR_VOLTAGE = 12000; // mV
         // uses basic motors, which doesn't requre gearset to be configured in code
     }
 
@@ -142,9 +145,7 @@ namespace constants
             0 // right // TODO
         };
 
-        inline const bool USE_TOGGLE = true;
-        inline const pros::motor_brake_mode_e BRAKE_MODE = pros::E_MOTOR_BRAKE_BRAKE;
-
+        inline const bool USE_TOGGLE = false;
         inline constexpr int ARM_VOLTAGE = 12000; // mV
     }
 
