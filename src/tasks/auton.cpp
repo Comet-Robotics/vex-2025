@@ -24,7 +24,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::VSBLUE;
+inline constexpr AutonMode MODE = AutonMode::VSRED;
 
 void autonomousTest()
 {
@@ -230,6 +230,7 @@ void autonomousVSRed()
     drivebase->moveToPoint(-10, 5, DEFAULT_TIMEOUT);
     intake->forward();
     drivebase->turnThenMoveToPoint(-24, 48);
+    intake->stop();
 
     // spit out blue ring and grab red ring
     drivebase->turnToHeading(90, DEFAULT_TIMEOUT, {}, false);
