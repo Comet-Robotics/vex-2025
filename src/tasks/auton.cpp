@@ -12,7 +12,8 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 enum class AutonMode
 {
-    VS,
+    VSRED,
+    VSBLUE,
     SKILLS,
     TEST
 };
@@ -22,7 +23,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::VS;
+inline constexpr AutonMode MODE = AutonMode::VSRED;
 
 void autonomousTest()
 {
@@ -84,6 +85,7 @@ void autonomousSkills()
     
     // go get far mobile goal
     drivebase->moveToPoint(-50, -50, DEFAULT_TIMEOUT); // back up from corner
+    intake->stop(); // stop motor from burning out
     
     /*
     // avoid tower (choose either of these)
@@ -121,8 +123,65 @@ void autonomousSkills()
     
 }
 
+void autonomousVSBlue() {
+    drivebase->setPose(55.5, -31.5, 180);
+    clamp->unclamp();
 
-void autonomousVS(){
+
+    // grab mobile goal
+    drivebase->moveToPoint(48, -24, DEFAULT_TIMEOUT, {.forwards = false, .maxSpeed = 80});
+    drivebase->moveToPoint(48, 0, DEFAULT_TIMEOUT, {.forwards = false, .maxSpeed = 80}, false);
+    clamp->clamp();
+    pros::delay(200);
+
+    intake->forward();
+    elevator->forward();
+
+    drivebase->turnThenMoveToPoint(54, 0, DEFAULT_TIMEOUT);
+
+    
+    // grab ring from blue/red stack
+    drivebase->turnThenMoveToPoint(48, -48);
+    intake->stop();
+    drivebase->turnThenMoveToPoint(48, -58);
+    drivebase->turnThenMoveToPoint(48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    intake->forward();
+    // drivebase->turnThenMoveToPoint(28, -48);
+    // pros::delay(500);
+    // elevator->stop();
+    
+
+    // grab ring from red/blue stack (make sure to spit out bottom blue ring)
+    // drivebase->turnThenMoveToPoint(36, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    // drivebase->turnToHeading(45, DEFAULT_TIMEOUT, {}, false);
+    // drivebase->moveToPoint(48, -36, DEFAULT_TIMEOUT);
+    // drivebase->moveToPoint(24, -48, DEFAULT_TIMEOUT, {.forwards = false});
+    // intake->reverse();
+    // drivebase->waitUntilStationary();
+    // intake->forward();
+    // drivebase->turnThenMoveToPoint(12, -48, false);
+    // elevator->forward();
+
+
+    // drivebase->turnThenMoveToPoint(48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+
+    // corner intake
+    drivebase->turnThenMoveToPoint(64, -64, 2000);
+    intake->reverse();
+    drivebase->waitUntilStationary();
+    intake->forward();
+    pros::delay(4000); // TODO: tune
+
+    drivebase->turnThenMoveToPoint(50, -50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    drivebase->turnThenMoveToPoint(64, -64, 2000, {.forwards = false}, {.forwards = false}, false);
+    clamp->unclamp();
+    elevator->reverse();
+
+    drivebase->turnThenMoveToPoint(50, -50);
+}
+
+
+void autonomousVSRed(){
     drivebase->setPose(-55.5, -31.5, 180);
     clamp->unclamp();
 
@@ -145,23 +204,23 @@ void autonomousVS(){
     drivebase->turnThenMoveToPoint(-48, -58);
     drivebase->turnThenMoveToPoint(-48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
     intake->forward();
-    drivebase->turnThenMoveToPoint(-28, -48);
-    pros::delay(500);
-    elevator->stop();
+    // drivebase->turnThenMoveToPoint(-28, -48);
+    // pros::delay(500);
+    // elevator->stop();
     
 
     // grab ring from red/blue stack (make sure to spit out bottom blue ring)
-    drivebase->turnThenMoveToPoint(-36, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
-    drivebase->turnToHeading(-45, DEFAULT_TIMEOUT, {}, false);
-    drivebase->moveToPoint(-48, -36, DEFAULT_TIMEOUT);
-    drivebase->moveToPoint(-24, -48, DEFAULT_TIMEOUT, {.forwards = false});
-    intake->reverse();
-    pros::delay(500);
-    intake->forward();
-    elevator->forward();
-    drivebase->turnThenMoveToPoint(-12, -48);
+    // drivebase->turnThenMoveToPoint(-36, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    // drivebase->turnToHeading(-45, DEFAULT_TIMEOUT, {}, false);
+    // drivebase->moveToPoint(-48, -36, DEFAULT_TIMEOUT);
+    // drivebase->moveToPoint(-24, -48, DEFAULT_TIMEOUT, {.forwards = false});
+    // intake->reverse();
+    // drivebase->waitUntilStationary();
+    // intake->forward();
+    // elevator->forward();
+    // drivebase->turnThenMoveToPoint(-12, -48);
 
-    drivebase->turnThenMoveToPoint(-48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    // drivebase->turnThenMoveToPoint(-48, -48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
 
     // corner intake
     drivebase->turnThenMoveToPoint(-64, -64, 2000);
@@ -185,8 +244,10 @@ void autonomous()
         return autonomousTest();
     case AutonMode::SKILLS:
         return autonomousSkills();
-    case AutonMode::VS:
-        return autonomousVS();
+    case AutonMode::VSRED:
+        return autonomousVSRed();
+    case AutonMode::VSBLUE:
+        return autonomousVSBlue();
     default:
         break;
     }
