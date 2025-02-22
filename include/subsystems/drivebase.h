@@ -2,7 +2,6 @@
 #define __SUBSYSTEMS_DRIVEBASE_H__
 
 #include "constants.h"
-#include "pros/motors.h"
 #include <cmath>
 
 using namespace constants::drivebase;
