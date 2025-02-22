@@ -10,7 +10,7 @@ class Clamp : public pros::adi::DigitalOut
 
 public:
     bool isToggled = false;
-    Clamp() : pros::adi::DigitalOut(PORT, false) {}
+    Clamp() : pros::adi::DigitalOut(CLAMP_PORT, false) {}
 
     void toggle()
     {

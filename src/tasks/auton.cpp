@@ -23,7 +23,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::VS;
+inline constexpr AutonMode MODE = AutonMode::SKILLS;
 
 void autonomousTest()
 {
@@ -68,19 +68,23 @@ void autonomousSkillsRed()
     // Go get the next rings in sequence
     drivebase->turnThenMoveToPoint(-24, 24);
     drivebase->turnThenMoveToPoint(0, 47);
-    drivebase->turnThenMoveToPoint(0, 59);
+    drivebase->turnThenMoveToPoint(0, 54);
+    drivebase->turnThenMoveToPoint(0, 48, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    drivebase->turnThenMoveToPoint(-48, 48);
+
 
     // why does this work
     // drivebase->setPose(drivebase->getPose().x + 6, drivebase->getPose().y, drivebase->getPose().theta);
     
     // Get the ring in the corner
-    drivebase->turnThenMoveToPoint(-59, 59, false);
+    drivebase->turnThenMoveToPoint(-59, 59, 2000);
     
     // Back up
-    drivebase->turnThenMoveToPoint(-50, 50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    drivebase->turnThenMoveToPoint(-50, 50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
 
     // turn around and deposit the mobile goal
-    drivebase->turnThenMoveToPoint(-60, 60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    elevator->reverse();
+    drivebase->turnThenMoveToPoint(-60, 60, 1500, {.forwards = false}, {.forwards = false}, false);
     clamp->unclamp();
     intake->stop();
     elevator->stop();
@@ -92,12 +96,12 @@ void autonomousSkillsRed()
     
     //avoid the middle while going to the next mobile goal (choose between these)
     // drivebase->follow(avoidTowerRed_txt, 15, DEFAULT_TIMEOUT, false); 
-    drivebase->turnThenMoveToPoint(-16, 48);
-    drivebase->turnToPoint(-16, 63, DEFAULT_TIMEOUT, {.forwards = false}, false);
+    drivebase->turnThenMoveToPoint(-12, 48, DEFAULT_TIMEOUT, {}, {.maxSpeed = 90}, false);
+    drivebase->turnToPoint(-12, 63, DEFAULT_TIMEOUT, {.forwards = false}, false);
     drivebase->arcade(-63, 0);
     pros::delay(1500);
     drivebase->setHeading(180);
-    drivebase->moveToPoint(-16, 60, DEFAULT_TIMEOUT, {.forwards = false});
+    drivebase->moveToPoint(-12, 56, DEFAULT_TIMEOUT, {.forwards = false});
     drivebase->turnThenMoveToPoint(26, 22,  DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false, .maxSpeed = 40}, false);
     
     // Clamp mobile goal
@@ -107,9 +111,9 @@ void autonomousSkillsRed()
     elevator->forward();
 
     // Go get the 4 rings in the middle
-    drivebase->turnThenMoveToPoint(3, 3);
-    drivebase->turnThenMoveToPoint(-6, 3);
-    drivebase->turnThenMoveToPoint(-3, -6);
+    drivebase->turnThenMoveToPoint(8, 8);
+    drivebase->turnThenMoveToPoint(-10, 8);
+    drivebase->turnThenMoveToPoint(-10, -10);
     drivebase->turnThenMoveToPoint(6, -6); // might be able to just be turn to point
 
     // Get the other two rings
@@ -120,14 +124,14 @@ void autonomousSkillsRed()
     // (force mech team to put a fucking bar on a piston and it works probably)
 
     // Intake the corner red ring DONT PUT ON MOGO
-    drivebase->turnThenMoveToPoint(60, 60, DEFAULT_TIMEOUT, {}, {}, false);
+    drivebase->turnThenMoveToPoint(60, 60, 2000, {}, {}, false);
     pros::delay(300);
     intake->stop();
     elevator->stop();
 
     // move backwards, turn around, and then deposit the mobile goal
     drivebase->turnThenMoveToPoint(50, 50, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
-    drivebase->turnThenMoveToPoint(60, 60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false}, false);
+    drivebase->turnThenMoveToPoint(60, 60, 2000, {.forwards = false}, {.forwards = false}, false);
     clamp->unclamp();
     
     // grab final mobile goal and place all remaining red rings except one onto it
@@ -213,6 +217,10 @@ void autonomousVS()
 
 void autonomous()
 {
+    dropdown->dropdown();
+    pros::delay(100);
+    dropdown->reset();
+
     switch (MODE)
     {
     case AutonMode::TEST:

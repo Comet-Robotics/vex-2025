@@ -102,7 +102,7 @@ namespace constants
             &IMU     // inertial sensor
         );
 
-        inline constexpr pros::motor_brake_mode_e BRAKE_MODE = pros::E_MOTOR_BRAKE_BRAKE;
+        inline constexpr pros::motor_brake_mode_e DRIVE_BRAKE_MODE = pros::E_MOTOR_BRAKE_COAST; // if we brake mode then we tip
 
         inline constexpr int DEFAULT_TIMEOUT = 5000;
         inline constexpr float DECELERATION_LIMIT = 0.05;
@@ -136,7 +136,7 @@ namespace constants
 
     namespace clamp
     {
-        inline constexpr char PORT = 'A';
+        inline constexpr char CLAMP_PORT = 'A';
     }
 
     namespace arm
@@ -149,6 +149,12 @@ namespace constants
         inline const bool USE_TOGGLE = true;
 
         inline constexpr int ARM_VOLTAGE = 12000; // mV
+        inline constexpr pros::motor_brake_mode_e ARM_BRAKE_MODE = pros::E_MOTOR_BRAKE_HOLD;
+    }
+
+    namespace dropdown
+    {
+        inline constexpr char DROPDOWN_PORT = 'F';
     }
 
     inline constexpr double TELEOP_POLL_TIME = 10.0; // ms

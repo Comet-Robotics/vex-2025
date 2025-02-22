@@ -135,6 +135,9 @@ void trackWidthTuner() {
 void driverControl() {
     Controller controller(pros::E_CONTROLLER_MASTER);
     drivebase->setPose(0, 0, 0);
+    dropdown->dropdown();
+    pros::delay(100);
+    dropdown->reset();
 
     while (true) {
         pros::lcd::print(0, "Battery: %2.3f V", pros::battery::get_voltage() / 1000.0f);
@@ -147,7 +150,9 @@ void driverControl() {
 
         pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
 
-        pros::lcd::print(2, "Theta: %f", drivebase->getPose().theta);
+        pros::lcd::print(2, "X: %f", drivebase->getPose().x);
+        pros::lcd::print(3, "Y: %f", drivebase->getPose().y);
+        pros::lcd::print(4, "Theta: %f", drivebase->getPose().theta);
 
         pros::delay(constants::TELEOP_POLL_TIME);
     }
