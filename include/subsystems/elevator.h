@@ -16,13 +16,17 @@ enum class ElevatorState
 class Elevator : public pros::MotorGroup
 {
 public:
-    Elevator() : pros::MotorGroup({ELEVATOR_PORTS[0], ELEVATOR_PORTS[1]}) {}
+    Elevator() : pros::MotorGroup({ELEVATOR_PORTS[0]}) {}
 
     inline void forward() { this->move_voltage(ELEVATOR_VOLTAGE); }
 
     inline void reverse() { this->move_voltage(-ELEVATOR_VOLTAGE); }
 
     inline void stop() { this->move_voltage(0); }
+    
+    inline bool isStalled() { return (this->get_efficiency(ELEVATOR_PORTS[0]) < 10); }
+
+    inline int32_t getEfficiency() { return this->get_efficiency(ELEVATOR_PORTS[0]); }
 
     void toggleForward() {
         if (state == ElevatorState::FORWARD) {

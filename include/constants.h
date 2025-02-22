@@ -32,16 +32,16 @@ namespace constants
             4
         };
 
-        inline constexpr double DRIVETRAIN_WIDTH = 11.5; //tune this
+        inline constexpr double DRIVETRAIN_WIDTH = 6.5; //tune this
         inline constexpr int8_t IMU_PORT = 19;
 
         inline constexpr auto CHASSIS_INTERNAL_GEARSET = pros::v5::MotorGears::blue;
 
         // lateral PID controller
         inline const lemlib::ControllerSettings LATERAL_CONTROLLER(
-            6,   // proportional gain (kP)
+            5.5,   // proportional gain (kP)
             0.95,   // integral gain (kI)
-            45,   // derivative gain (kD)
+            55,   // derivative gain (kD)
             1.1,   // anti windup
             0.5,   // small error range, in inches
             100, // small error range timeout, in milliseconds
@@ -54,7 +54,7 @@ namespace constants
         inline const lemlib::ControllerSettings ANGULAR_CONTROLLER(
             4, // proportional gain (kP)
             0.8,// integral gain (kI)
-            45,// derivative gain (kD)
+            55,// derivative gain (kD)
             4, // anti windup
             0.5, // small error range, in degrees
             100, // small error range timeout, in milliseconds
@@ -92,7 +92,7 @@ namespace constants
         inline lemlib::TrackingWheel VERTICAL_TRACKING (
             &VERTICAL_ROTATION, // rotation sensor
             lemlib::Omniwheel::NEW_2 * (45.5 / 48), // wheel diameter
-            0 // distance from center of rotation
+            0.5 // distance from center of rotation
         );
 
         inline lemlib::OdomSensors SENSORS(

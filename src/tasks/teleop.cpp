@@ -90,20 +90,49 @@ static void clamp_controls(Controller &controller) {
     }
 }
 
-/**
- * Runs the operator control code. This function will be started in its own task
- * with the default priority and stack size whenever the robot is enabled via
- * the Field Management System or the VEX Competition Switch in the operator
- * control mode.
- *
- * If no competition control is connected, this function will run immediately
- * following initialize().
- *
- * If the robot is disabled or communications is lost, the
- * operator control task will be stopped. Re-enabling the robot will restart the
- * task, not resume it from where it left off.
- */
-void opcontrol() {
+void trackWidthTuner() {
+    Controller controller(pros::E_CONTROLLER_MASTER);
+    drivebase->setPose(0, 0, 0);
+    float highestDist = 0;
+    pros::lcd::print(0, "Battery: %2.3f V", pros::battery::get_voltage() / 1000.0f);
+
+    // drivebase_controls(controller);
+    // intake_controls(controller);
+    // elevator_controls(controller);
+    // clamp_controls(controller);
+    // arm_controls(controller);
+
+    int startTime = pros::millis();
+    while (pros::millis() - startTime < 3000) {
+        drivebase->arcade(0, 63);
+        pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
+        pros::lcd::print(2, "TW: %.2f", DRIVETRAIN_WIDTH);
+        pros::lcd::print(3, "TopDist: %.3f", highestDist);
+
+        float currentDist = sqrt(pow(drivebase->getPose().x, 2) + pow(drivebase->getPose().y, 2));
+        if (currentDist > highestDist) {
+            highestDist = currentDist;
+        }
+
+        pros::delay(constants::TELEOP_POLL_TIME);
+    }
+
+    drivebase->arcade(0, 0);
+
+        // if (controller.get_digital(pros::E_CONTROLLER_DIGITAL_X)) {
+        //     drivebase->setPose(0, 0, 0);
+        // }
+
+    while (true) {
+        pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
+        pros::lcd::print(2, "TW: %.2f", DRIVETRAIN_WIDTH);
+        pros::lcd::print(3, "TopDist: %.3f", highestDist);
+
+        pros::delay(constants::TELEOP_POLL_TIME);
+    }
+}
+
+void driverControl() {
     Controller controller(pros::E_CONTROLLER_MASTER);
     // drivebase->setPose(0, 0, 0);
 
@@ -126,6 +155,31 @@ void opcontrol() {
         // controller.print(2, 0, "Theta: %f", drivebase->getPose().theta);
         // pros::delay(50);
 
+        
+        pros::lcd::print(1, "X: %f", drivebase->getPose().x);
+        pros::lcd::print(2, "Y: %f", drivebase->getPose().y);
+        pros::lcd::print(3, "Theta: %f", drivebase->getPose().theta);
+        pros::lcd::print(4, "Elev Eff: %d", elevator->getEfficiency());
+
         pros::delay(constants::TELEOP_POLL_TIME);
     }
+}
+
+
+/**
+ * Runs the operator control code. This function will be started in its own task
+ * with the default priority and stack size whenever the robot is enabled via
+ * the Field Management System or the VEX Competition Switch in the operator
+ * control mode.
+ *
+ * If no competition control is connected, this function will run immediately
+ * following initialize().
+ *
+ * If the robot is disabled or communications is lost, the
+ * operator control task will be stopped. Re-enabling the robot will restart the
+ * task, not resume it from where it left off.
+ */
+void opcontrol() {
+    // trackWidthTuner();
+    driverControl();
 }
