@@ -42,6 +42,12 @@ static void intake_controls(Controller &controller) {
     }
 }
 
+static void dropdown_controls(Controller &controller) {
+    if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_A)) {
+        dropdown->toggle();
+    }
+}
+
 static void elevator_controls(Controller &controller) {
     if constexpr (constants::elevator::USE_TOGGLE) {
         if (controller.get_digital_new_press(E_CONTROLLER_DIGITAL_L1)) {
@@ -135,9 +141,6 @@ void trackWidthTuner() {
 void driverControl() {
     Controller controller(pros::E_CONTROLLER_MASTER);
     drivebase->setPose(0, 0, 0);
-    dropdown->dropdown();
-    pros::delay(100);
-    dropdown->reset();
 
     while (true) {
         pros::lcd::print(0, "Battery: %2.3f V", pros::battery::get_voltage() / 1000.0f);
@@ -147,12 +150,11 @@ void driverControl() {
         elevator_controls(controller);
         clamp_controls(controller);
         arm_controls(controller);
+        dropdown_controls(controller);
 
         pros::lcd::print(1, "Rotation Sensor: %i", constants::drivebase::VERTICAL_ROTATION.get_position());
 
-        pros::lcd::print(2, "X: %f", drivebase->getPose().x);
-        pros::lcd::print(3, "Y: %f", drivebase->getPose().y);
-        pros::lcd::print(4, "Theta: %f", drivebase->getPose().theta);
+        pros::lcd::print(2, "Theta: %f", drivebase->getPose().theta);
 
         pros::delay(constants::TELEOP_POLL_TIME);
     }

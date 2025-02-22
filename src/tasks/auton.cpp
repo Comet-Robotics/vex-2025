@@ -13,7 +13,8 @@ pros::Controller controller(pros::E_CONTROLLER_MASTER);
 
 enum class AutonMode
 {
-    VS,
+    VSRED,
+    VSBLUE,
     SKILLS,
     TEST
 };
@@ -23,7 +24,7 @@ enum class AutonMode
  *  SKILLS is self explanitory
  *  TEST is testing any autons or tuning
  */
-inline constexpr AutonMode MODE = AutonMode::SKILLS;
+inline constexpr AutonMode MODE = AutonMode::VSBLUE;
 
 void autonomousTest()
 {
@@ -172,8 +173,49 @@ void autonomousSkills()
     autonomousSkillsRed();
 }
 
+void autonomousVSBlue()
+{
+    drivebase->setPose(56, 12, 90);
+    clamp->unclamp();
 
-void autonomousVS()
+    // drive to middle mobile goal and clamp
+    drivebase->moveToPoint(20.78, 12, DEFAULT_TIMEOUT, {.forwards = false});
+    drivebase->turnThenMoveToPoint(5.19, 3, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false, .maxSpeed = 41}, false);
+    clamp->clamp();
+    pros::delay(200);
+
+    // drive to red/blue goal stack
+    drivebase->moveToPoint(10, 5, DEFAULT_TIMEOUT);
+    intake->forward();
+    drivebase->turnThenMoveToPoint(24, 48);
+
+    // spit out blue ring and grab red ring
+    drivebase->turnToHeading(-90, DEFAULT_TIMEOUT, {}, false);
+    intake->reverse();
+    pros::delay(500);
+    intake->forward();
+    elevator->forward();
+    drivebase->turnThenMoveToPoint(28, 58);
+    
+    // drive to blue/red goal stack and grab red ring
+    drivebase->turnThenMoveToPoint(48, 48);
+
+    // corner intaking!
+    // enter corner with intake reversed, then once in corner, put intake forward
+    drivebase->turnThenMoveToPoint(64, 64);
+    intake->reverse();
+    drivebase->waitUntilStationary();
+    intake->forward();
+    pros::delay(2000); // TODO: tune
+
+    drivebase->turnThenMoveToPoint(60, 60, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    intake->stop();
+    elevator->stop();
+    drivebase->turnThenMoveToPoint(36, -36, DEFAULT_TIMEOUT, {.forwards = false}, {.forwards = false});
+    drivebase->turnThenMoveToPoint(12, -36);
+}
+
+void autonomousVSRed()
 {
     drivebase->setPose(-56, 12, -90);
     clamp->unclamp();
@@ -227,8 +269,10 @@ void autonomous()
         return autonomousTest();
     case AutonMode::SKILLS:
         return autonomousSkills();
-    case AutonMode::VS:
-        return autonomousVS();
+    case AutonMode::VSRED:
+        return autonomousVSRed();
+    case AutonMode::VSBLUE:
+        return autonomousVSBlue();
     default:
         break;
     }

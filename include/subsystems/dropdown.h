@@ -24,6 +24,11 @@ public:
         this->set_value(isToggled);
     }
 
+    void toggle() {
+        isToggled = !isToggled;
+        this->set_value(isToggled);
+    }
+
 private:
 };
 
